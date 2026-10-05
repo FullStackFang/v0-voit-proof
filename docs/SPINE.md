@@ -1,7 +1,7 @@
-# Voit Proof: the deck's narrative spine
+# Voit Proof: the narrative spine
 
-Source of truth for the deck. One beat per slide. Every slide must advance the through-line.
-Written by the founder, 2026-10-05. The deck in `deck.html` follows this file; if they disagree, this file wins.
+One beat per idea. Everything built should advance the through-line.
+Written by the founder, 2026-10-05. Context for the product, not a deck to build.
 
 ## The through-line
 

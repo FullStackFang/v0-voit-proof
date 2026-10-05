@@ -9,13 +9,10 @@ brand
 - **Recruiters** at mid-size software companies hiring remote developers (Priya). Buried in identical applications, some of them organised fraud. Wants a trustworthy shortlist without rejecting anyone automatically.
 - **Engineering managers** who curate the challenges and read the flagged cases. Want signal, not another tool to run.
 - **Candidates** (Marcus). Good at the work, invisible on paper, never hears back. Wants to be judged on work, get feedback, and keep a record that grows.
-- **Investors and advisors** reading the deck without a presenter.
 
 ## Product Purpose
 
 Applying became free, so applications stopped meaning anything. Voit Proof puts a small piece of real work back into every application: a recruiter pastes one line, the candidate fixes one real bug in about ten minutes, the work is scored and compared with strong developers, and the recruiter's pool reorders itself with the strongest real applicants at the top and nobody removed. Candidates get standing, feedback and a verified record.
-
-Success for the deck: a careful reader follows it alone; it looks like one company with Voit Lab; the appendix lets them fix the bug and feel what a candidate feels.
 
 ## Brand Personality
 

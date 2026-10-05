@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Read `deck/SPINE.md`, then `DESIGN.md`, then `mockups/language.html` before touching anything.
+Read `docs/SPINE.md`, then `DESIGN.md`, then `mockups/language.html` before touching anything.
 
 ## Working agreements
 
@@ -14,7 +14,6 @@ Read `deck/SPINE.md`, then `DESIGN.md`, then `mockups/language.html` before touc
 
 `../v0-voit` (research sim), `../v0-voit-lab` (workshop arena, its own language The Ruled Line), this repo (the product, The Gate). Shared: the stroke-bundle wordmark grammar, Hanken Grotesk, IBM Plex Mono, the voice.
 
-## Commands
+## What this repo is
 
-    node --test deck/        # the appendix challenge's tests and the deck's navigation tests
-    node scripts/check.js    # copy and token rules
+The product: a real-work challenge embedded in job applications. `docs/SPINE.md` is the narrative the product serves. Do not build decks, slides or presentation artifacts from it; build the product.

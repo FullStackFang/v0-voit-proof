@@ -6,16 +6,6 @@ Voit is the thesis (a reverse Turing test: the form is the examiner). Voit Lab i
 
 ## What is here
 
-- `deck/deck.html` is the pitch deck. Open it in a browser. Arrow keys move between slides; the last slide is a live challenge you can solve.
-- `deck/SPINE.md` is the narrative the deck follows, one beat per slide. If they disagree, the spine wins.
+- `docs/SPINE.md` is the product narrative, one beat per idea. It is context for what gets built, not a deliverable.
 - `mockups/language.html` is the design language, The Gate. `DESIGN.md` records it; `PRODUCT.md` records who it is for.
-- `docs/superpowers/` holds the spec and plan this was built from.
-
-## Tests
-
-The appendix's challenge has three tests that also run from the terminal, along with the deck's own:
-
-    node --test deck/
-    node scripts/check.js
-
-Nothing to install.
+- Everything else is the product, as it gets built.
