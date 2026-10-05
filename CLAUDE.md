@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Read `docs/SPINE.md`, then `DESIGN.md`, then `mockups/language.html` before touching anything.
+Read `HANDOFF.md` first, every session. "Continue" means do the top item of its Next steps. Then `docs/SPINE.md`, `DESIGN.md` and `mockups/language.html` before touching anything.
 
 ## Working agreements
 
