@@ -26,7 +26,7 @@ Family: `../v0-voit` (research sim), `../v0-voit-lab` (workshop arena). This rep
 
 ## Next steps
 
-1. **Founder reviews the slice 1 spec**: `docs/superpowers/specs/2026-10-05-judge-the-ai-design.md` ("Judge the AI": candidates judge AI output in decide, rank and write items; gold items scored, open items become labels). It replaced the bug-fix challenge on 2026-10-05. Two open questions at its end (Supabase, fictional employer name). On approval: static mockup in `mockups/` first, then the writing-plans skill.
+1. **Founder reviews the OpenSpec change `openspec/changes/judge-the-ai/`** (proposal, design, specs, tasks; validates strict) ("Judge the AI": candidates judge AI output in decide, rank and write items; gold items scored, open items become labels). It replaced the bug-fix challenge on 2026-10-05. Open questions at the end of design.md (Supabase, fictional employer name). Specs live in OpenSpec, not docs/superpowers. On approval: `/opsx:apply`, starting with tasks group 1 (mockup and items for founder approval).
 2. Decide the untracked `deck/` folder's fate: finish, delete, or leave.
 
 Founder's direction, learned the hard way on 2026-10-05: simple, game-like nuggets of judgment, not multi-step interviews or long flows.
