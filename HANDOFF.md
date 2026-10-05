@@ -26,6 +26,7 @@ Family: `../v0-voit` (research sim), `../v0-voit-lab` (workshop arena). This rep
 
 ## Next steps
 
-1. **Confirm the first product slice with the founder, then spec it.** Proposed: `<voit-challenge>` as a real web component that renders inline in any HTML form, runs one bug-fix challenge in the browser (editor, tests, pass or not yet), and reports the result. Ranked pool, accounts and records come after. Use the brainstorming skill; write the spec to `docs/superpowers/specs/`.
-2. Decide the stack with the founder before scaffolding (the workspace default is Next.js on Vercel; the embed itself should be framework-free).
-3. Decide the untracked `deck/` folder's fate: finish, delete, or leave.
+1. **Founder reviews the slice 1 spec**: `docs/superpowers/specs/2026-10-05-judge-the-ai-design.md` ("Judge the AI": candidates judge AI output in decide, rank and write items; gold items scored, open items become labels). It replaced the bug-fix challenge on 2026-10-05. Two open questions at its end (Supabase, fictional employer name). On approval: static mockup in `mockups/` first, then the writing-plans skill.
+2. Decide the untracked `deck/` folder's fate: finish, delete, or leave.
+
+Founder's direction, learned the hard way on 2026-10-05: simple, game-like nuggets of judgment, not multi-step interviews or long flows.
