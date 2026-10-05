@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voit Proof</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Pixelify+Sans&display=swap" rel="stylesheet">
+<style>
+/* Voit Proof deck. Language: The Gate (mockups/language.html, DESIGN.md). */
+:root {
+  --display: "Bricolage Grotesque", "Hanken Grotesk", system-ui, sans-serif;
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --pixel: "Pixelify Sans", var(--mono);
+  --r-s: 10px; --r-m: 16px; --r-l: 24px;
+}
+[data-ground="cream"] {
+  --ground: oklch(0.975 0.012 85); --ground-2: oklch(0.945 0.022 80);
+  --ink: oklch(0.23 0.015 60); --ink-2: oklch(0.47 0.015 60); --line: oklch(0.88 0.016 80);
+  --proof: oklch(0.50 0.21 265); --proof-tint: oklch(0.92 0.045 265);
+  --you: oklch(0.66 0.19 35); --you-tint: oklch(0.935 0.055 40);
+  --team: oklch(0.58 0.12 180); --team-tint: oklch(0.925 0.05 180);
+  --flag: oklch(0.82 0.16 92); --flag-tint: oklch(0.96 0.08 95);
+  --noise: oklch(0.70 0.07 300); --noise-tint: oklch(0.94 0.03 300);
+  --fail: oklch(0.56 0.19 28);
+}
+[data-ground="charcoal"] {
+  --ground: oklch(0.215 0.015 60); --ground-2: oklch(0.27 0.018 60);
+  --ink: oklch(0.965 0.012 85); --ink-2: oklch(0.72 0.015 70); --line: oklch(0.34 0.018 60);
+  --proof: oklch(0.72 0.15 265); --proof-tint: oklch(0.32 0.06 265);
+  --you: oklch(0.76 0.16 38); --you-tint: oklch(0.34 0.06 38);
+  --team: oklch(0.74 0.11 180); --team-tint: oklch(0.31 0.05 180);
+  --flag: oklch(0.86 0.15 92); --flag-tint: oklch(0.36 0.06 92);
+  --noise: oklch(0.72 0.07 300); --noise-tint: oklch(0.31 0.03 300);
+  --fail: oklch(0.70 0.18 28);
+}
+* { box-sizing: border-box; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+html, body { margin: 0; }
+body { font: 17px/1.55 var(--sans); -webkit-font-smoothing: antialiased; background: var(--ground); color: var(--ink); transition: background .4s ease; }
+@media (prefers-reduced-motion: reduce) { body { transition: none; } html { scroll-behavior: auto; } }
+.slide { min-height: 100vh; scroll-snap-align: start; padding: 40px 24px 72px; display: grid; grid-template-rows: auto 1fr; gap: 24px; background: var(--ground); color: var(--ink); }
+.slide-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; max-width: 1160px; width: 100%; margin: 0 auto; }
+.slide-body { max-width: 1160px; width: 100%; margin: 0 auto; display: grid; align-content: center; gap: 36px; min-width: 0; }
+.mark-sm { display: flex; align-items: center; gap: 10px; font: 600 16px var(--display); letter-spacing: -.01em; }
+.mark-sm svg { flex: none; }
+#counter { position: fixed; right: 24px; bottom: 20px; z-index: 2; }
+.label { font: 500 12px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.display { font: 600 clamp(44px, 7vw, 92px)/0.96 var(--display); letter-spacing: -.035em; margin: 0; text-wrap: balance; }
+.headline { font: 600 clamp(32px, 4.4vw, 54px)/1.02 var(--display); letter-spacing: -.03em; margin: 0; text-wrap: balance; }
+.title { font: 600 24px/1.15 var(--display); letter-spacing: -.02em; margin: 0; }
+.body { max-width: 60ch; color: var(--ink-2); margin: 0; }
+.data { font: 400 14px/1.55 var(--mono); font-variant-numeric: tabular-nums; }
+.counter { font: 400 15px var(--pixel); letter-spacing: .05em; color: var(--ink-2); }
+.tile { border-radius: var(--r-l); padding: 28px; background: var(--ground-2); min-width: 0; }
+.tile.proof { background: var(--proof-tint); } .tile.you { background: var(--you-tint); } .tile.team { background: var(--team-tint); } .tile.flag { background: var(--flag-tint); } .tile.noise { background: var(--noise-tint); }
+.tile .label { color: var(--ink); opacity: .7; } .tile p { margin: 10px 0 0; color: var(--ink); font-size: 15px; max-width: 36ch; }
+.btn { display: inline-flex; align-items: center; gap: 12px; height: 52px; padding: 0 22px 0 24px; border: 0; border-radius: 999px; background: var(--ink); color: var(--ground); font: 600 16px var(--sans); cursor: pointer; }
+.btn svg { width: 20px; height: 12px; transition: transform .25s cubic-bezier(.2,.8,.2,1); } .btn:hover svg { transform: translateX(4px); }
+.btn.soft { background: var(--proof-tint); color: var(--proof); } .btn.you { background: var(--you); color: oklch(0.99 0.01 40); }
+.chip { display: inline-flex; align-items: center; font: 400 14px var(--mono); padding: 8px 12px; border-radius: var(--r-s); background: var(--ground-2); color: var(--ink); border: 1px solid var(--line); max-width: 100%; overflow-wrap: anywhere; }
+.tag { display: inline-block; font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; vertical-align: middle; }
+.tag.draft { background: var(--flag); color: oklch(0.3 0.06 92); } .tag.flag { background: var(--flag); color: oklch(0.3 0.06 92); } .tag.sim { background: var(--noise-tint); color: var(--noise); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; } .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; } .four { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.two > *, .three > *, .four > * { min-width: 0; }
+.rows { display: grid; gap: 0; } .rows > div { display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); } .rows > div:last-child { border-bottom: 1px solid var(--line); }
+.rows .n { font: 500 13px/1.7 var(--mono); color: var(--ink-2); } .rows b { font: 600 18px/1.2 var(--display); letter-spacing: -.015em; display: block; } .rows span { color: var(--ink-2); font-size: 15px; }
+svg.fig { width: 100%; height: auto; display: block; overflow: visible; }
+.s-ink { stroke: var(--ink); } .s-line { stroke: var(--ink-2); } .s-proof { stroke: var(--proof); } .s-you { stroke: var(--you); } .s-team { stroke: var(--team); } .s-flag { stroke: var(--flag); } .s-noise { stroke: var(--noise); }
+.f-ink { fill: var(--ink); } .f-proof { fill: var(--proof); } .f-you { fill: var(--you); } .f-team { fill: var(--team); } .f-noise { fill: var(--noise); } .f-ground { fill: var(--ground); } .f-tint { fill: var(--proof-tint); }
+.cap { font: 500 11px var(--mono); fill: var(--ink-2); letter-spacing: .08em; text-transform: uppercase; }
+:focus-visible { outline: 2px solid var(--proof); outline-offset: 3px; }
+@media (max-width: 760px) { .slide { padding: 24px 16px 64px; } .two, .three, .four { grid-template-columns: 1fr; } .slide-head .label { display: none; } }
+</style>
+</head>
+<body data-ground="charcoal">
+<span id="counter" class="counter" aria-live="polite">01 / 13</span>
+<main class="deck">
+  <section class="slide" data-ground="charcoal" id="s01"><header class="slide-head"><span class="mark-sm">Voit Proof</span><span class="label">01 · Title</span></header><div class="slide-body"></div></section>
+  <section class="slide" data-ground="cream" id="s02"><header class="slide-head"><span class="mark-sm">Voit Proof</span><span class="label">02 · Thesis</span></header><div class="slide-body"></div></section>
+  <section class="slide" data-ground="cream" id="s03"><header class="slide-head"><span class="mark-sm">Voit Proof</span><span class="label">03 · The employer</span></header><div class="slide-body"></div></section>
+  <section class="slide" data-ground="charcoal" id="s04"><header class="slide-head"><span class="mark-sm">Voit Proof</span><span class="label">04 · The candidate</span></header><div class="slide-body"></div></section>
+  <section class="slide" data-ground="cream" id="s05"><header class="slide-head"><span class="mark-sm">Voit Proof</span><span class="label">05 · How it's adopted</span></header><div class="slide-body"></div></section>
+  <section class="slide" data-ground="cream" id="s06"><header class="slide-head"><span class="mark-sm">Voit Proof</span><span class="label">06 · The candidate's experience</span></header><div class="slide-body"></div></section>
+  <section class="slide" data-ground="charcoal" id="s07"><header class="slide-head"><span class="mark-sm">Voit Proof</span><span class="label">07 · Employer value</span></header><div class="slide-body"></div></section>
+  <section class="slide" data-ground="cream" id="s08"><header class="slide-head"><span class="mark-sm">Voit Proof</span><span class="label">08 · Candidate value</span></header><div class="slide-body"></div></section>
+  <section class="slide" data-ground="cream" id="s09"><header class="slide-head"><span class="mark-sm">Voit Proof</span><span class="label">09 · Employer business model</span></header><div class="slide-body"></div></section>
+  <section class="slide" data-ground="charcoal" id="s10"><header class="slide-head"><span class="mark-sm">Voit Proof</span><span class="label">10 · Candidate business model</span></header><div class="slide-body"></div></section>
+  <section class="slide" data-ground="charcoal" id="s11"><header class="slide-head"><span class="mark-sm">Voit Proof</span><span class="label">11 · Strategy</span></header><div class="slide-body"></div></section>
+  <section class="slide" data-ground="cream" id="s12"><header class="slide-head"><span class="mark-sm">Voit Proof</span><span class="label">12 · Top 10 assumptions</span></header><div class="slide-body"></div></section>
+  <section class="slide" data-ground="cream" id="s13"><header class="slide-head"><span class="mark-sm">Voit Proof</span><span class="label">Appendix · What a candidate sees</span></header><div class="slide-body"></div></section>
+</main>
+<script src="deck.js"></script>
+</body>
+</html>
