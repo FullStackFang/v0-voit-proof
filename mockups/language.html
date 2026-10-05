@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voit Proof · Design language (proposal 01)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Pixelify+Sans&display=swap" rel="stylesheet">
+<style>
+/* Specimen for the proposed Voit Proof language: "The Gate". Static mockup. Nothing here is implementation. */
+:root {
+  --display: "Bricolage Grotesque", "Hanken Grotesk", system-ui, sans-serif;
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --pixel: "Pixelify Sans", var(--mono);
+  --measure: 1160px;
+  --r-s: 10px; --r-m: 16px; --r-l: 24px;
+}
+/* Two grounds. Cream is the base; Charcoal is the counter-section. Role colours keep their names on both. */
+[data-ground="cream"] {
+  --ground: oklch(0.975 0.012 85); --ground-2: oklch(0.945 0.022 80);
+  --ink: oklch(0.23 0.015 60); --ink-2: oklch(0.47 0.015 60); --line: oklch(0.88 0.016 80);
+  --proof: oklch(0.50 0.21 265); --proof-tint: oklch(0.92 0.045 265);
+  --you: oklch(0.66 0.19 35); --you-tint: oklch(0.935 0.055 40);
+  --team: oklch(0.58 0.12 180); --team-tint: oklch(0.925 0.05 180);
+  --flag: oklch(0.82 0.16 92); --flag-tint: oklch(0.96 0.08 95);
+  --noise: oklch(0.70 0.07 300); --noise-tint: oklch(0.94 0.03 300);
+  --fail: oklch(0.56 0.19 28);
+}
+[data-ground="charcoal"] {
+  --ground: oklch(0.215 0.015 60); --ground-2: oklch(0.27 0.018 60);
+  --ink: oklch(0.965 0.012 85); --ink-2: oklch(0.72 0.015 70); --line: oklch(0.34 0.018 60);
+  --proof: oklch(0.72 0.15 265); --proof-tint: oklch(0.32 0.06 265);
+  --you: oklch(0.76 0.16 38); --you-tint: oklch(0.34 0.06 38);
+  --team: oklch(0.74 0.11 180); --team-tint: oklch(0.31 0.05 180);
+  --flag: oklch(0.86 0.15 92); --flag-tint: oklch(0.36 0.06 92);
+  --noise: oklch(0.72 0.07 300); --noise-tint: oklch(0.31 0.03 300);
+  --fail: oklch(0.70 0.18 28);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { font: 17px/1.55 var(--sans); -webkit-font-smoothing: antialiased; background: oklch(0.975 0.012 85); color: oklch(0.23 0.015 60); }
+[data-ground] { background: var(--ground); color: var(--ink); }
+section { padding: 104px 24px; }
+.wrap { max-width: var(--measure); margin: 0 auto; }
+:focus-visible { outline: 2px solid var(--proof); outline-offset: 3px; }
+@media (max-width: 760px) { section { padding: 64px 16px; } }
+
+/* type roles */
+.label { font: 500 12px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.display { font: 600 clamp(46px, 7.4vw, 92px)/0.96 var(--display); letter-spacing: -.035em; margin: 0; text-wrap: balance; }
+.headline { font: 600 clamp(34px, 4.6vw, 54px)/1.02 var(--display); letter-spacing: -.03em; margin: 0; text-wrap: balance; }
+.title { font: 600 24px/1.15 var(--display); letter-spacing: -.02em; margin: 0; }
+.body { max-width: 60ch; color: var(--ink-2); margin: 0; }
+.data { font: 400 14px/1.55 var(--mono); font-variant-numeric: tabular-nums; }
+.counter { font: 400 15px var(--pixel); letter-spacing: .05em; color: var(--ink-2); }
+
+/* section head: label + lede, no rule, a lot of air */
+.head { display: grid; grid-template-columns: 200px 1fr; gap: 24px; margin-bottom: 44px; align-items: start; }
+.head .label { padding-top: 6px; }
+.head .headline { margin-bottom: 12px; }
+@media (max-width: 760px) { .head { grid-template-columns: 1fr; gap: 12px; } }
+
+/* tiles: the one container. tinted, rounded, flat. */
+.tile { border-radius: var(--r-l); padding: 28px; background: var(--ground-2); }
+.tile.proof { background: var(--proof-tint); } .tile.you { background: var(--you-tint); } .tile.team { background: var(--team-tint); } .tile.flag { background: var(--flag-tint); } .tile.noise { background: var(--noise-tint); }
+.tile .label { color: var(--ink); opacity: .7; }
+.tile p { margin: 10px 0 0; color: var(--ink); font-size: 15px; max-width: 34ch; }
+.tile .title { margin-top: 44px; }
+
+/* buttons: pills. one dark, one tinted. */
+.btn { display: inline-flex; align-items: center; gap: 12px; height: 52px; padding: 0 22px 0 24px; border: 0; border-radius: 999px; background: var(--ink); color: var(--ground); font: 600 16px var(--sans); cursor: pointer; }
+.btn svg { width: 20px; height: 12px; transition: transform .25s cubic-bezier(.2,.8,.2,1); }
+.btn:hover svg { transform: translateX(4px); }
+.btn.soft { background: var(--proof-tint); color: var(--proof); }
+.btn.you { background: var(--you); color: oklch(0.99 0.01 40); }
+.btn-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+/* chips: code and tags */
+.chip { display: inline-flex; align-items: center; gap: 10px; font: 400 14px var(--mono); padding: 8px 12px; border-radius: var(--r-s); background: var(--ground-2); color: var(--ink); border: 1px solid var(--line); }
+.tag { display: inline-block; font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; }
+.tag.proof { background: var(--proof); color: oklch(0.98 0.01 265); } .tag.you { background: var(--you-tint); color: var(--you); } .tag.team { background: var(--team-tint); color: var(--team); } .tag.flag { background: var(--flag); color: oklch(0.3 0.06 92); } .tag.noise { background: var(--noise-tint); color: var(--noise); }
+
+/* svg helpers */
+svg.fig { width: 100%; height: auto; display: block; overflow: visible; }
+.s-ink { stroke: var(--ink); } .s-line { stroke: var(--ink-2); } .s-proof { stroke: var(--proof); } .s-you { stroke: var(--you); } .s-team { stroke: var(--team); } .s-flag { stroke: var(--flag); } .s-noise { stroke: var(--noise); } .s-fail { stroke: var(--fail); }
+.f-ink { fill: var(--ink); } .f-proof { fill: var(--proof); } .f-you { fill: var(--you); } .f-team { fill: var(--team); } .f-flag { fill: var(--flag); } .f-noise { fill: var(--noise); } .f-ground { fill: var(--ground); } .f-tint { fill: var(--proof-tint); }
+.cap { font: 500 11px var(--mono); fill: var(--ink-2); letter-spacing: .08em; text-transform: uppercase; }
+
+/* ------- 1. hero ------- */
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-bottom: 16px; margin-bottom: 96px; border-bottom: 1px solid var(--line); }
+.mark-sm { display: flex; align-items: center; gap: 10px; font: 600 17px var(--display); letter-spacing: -.01em; }
+.wordmark { width: min(100%, 760px); height: auto; display: block; }
+.hero .display { margin-top: 56px; max-width: 13ch; }
+.hero .lede { margin-top: 28px; font-size: 21px; max-width: 50ch; color: var(--ink-2); }
+.principles { list-style: none; margin: 88px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.principles li { border-radius: var(--r-m); padding: 20px 20px 24px; background: var(--ground-2); }
+.principles li:nth-child(1) { background: var(--proof-tint); } .principles li:nth-child(2) { background: var(--you-tint); } .principles li:nth-child(3) { background: var(--team-tint); } .principles li:nth-child(4) { background: var(--flag-tint); } .principles li:nth-child(5) { background: var(--noise-tint); }
+.principles b { display: block; font: 600 19px/1.15 var(--display); letter-spacing: -.015em; margin: 36px 0 8px; }
+.principles span.t { font-size: 14.5px; color: var(--ink-2); display: block; }
+@media (max-width: 960px) { .principles { grid-template-columns: 1fr 1fr; } } @media (max-width: 560px) { .principles { grid-template-columns: 1fr; } }
+
+/* ------- 2. colour ------- */
+.roles { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.role { border-radius: var(--r-l); padding: 20px; min-height: 250px; display: flex; flex-direction: column; justify-content: space-between; }
+.role .swatch { display: flex; gap: 8px; }
+.role .swatch i { display: block; width: 42px; height: 42px; border-radius: 10px; }
+.role .name { font: 600 22px var(--display); letter-spacing: -.02em; }
+.role p { margin: 6px 0 0; font-size: 14px; color: var(--ink-2); }
+@media (max-width: 960px) { .roles { grid-template-columns: repeat(2, 1fr); } } @media (max-width: 560px) { .roles { grid-template-columns: 1fr; } }
+.ground-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+.ground-pair > div { border-radius: var(--r-l); padding: 24px; min-height: 170px; display: flex; flex-direction: column; justify-content: space-between; }
+.ground-pair .name { font: 600 22px var(--display); letter-spacing: -.02em; }
+.ground-pair p { margin: 6px 0 0; font-size: 14px; color: var(--ink-2); }
+@media (max-width: 760px) { .ground-pair { grid-template-columns: 1fr; } }
+.colour-rules { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 28px; }
+.colour-rules b { display: block; font: 600 18px var(--display); letter-spacing: -.015em; margin-bottom: 6px; }
+.colour-rules p { margin: 0; font-size: 15px; color: var(--ink-2); }
+@media (max-width: 760px) { .colour-rules { grid-template-columns: 1fr; } }
+
+/* ------- 3. type ------- */
+.scale { display: grid; gap: 28px; }
+.scale .row { display: grid; grid-template-columns: 200px 1fr; gap: 24px; align-items: baseline; padding-top: 20px; border-top: 1px solid var(--line); }
+.scale .spec { font: 400 12px/1.6 var(--mono); color: var(--ink-2); }
+.scale .spec b { display: block; color: var(--ink); font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
+@media (max-width: 760px) { .scale .row { grid-template-columns: 1fr; gap: 8px; } }
+.faces { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 48px; }
+.faces div { border-radius: var(--r-m); background: var(--ground-2); padding: 20px; font-size: 14.5px; color: var(--ink-2); }
+.faces .big { display: block; color: var(--ink); font-size: 44px; line-height: 1; margin: 4px 0 16px; letter-spacing: -.02em; }
+@media (max-width: 960px) { .faces { grid-template-columns: 1fr 1fr; } } @media (max-width: 560px) { .faces { grid-template-columns: 1fr; } }
+
+/* ------- 4. the gate ------- */
+.grammar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.glyph { border-radius: var(--r-l); background: var(--ground-2); padding: 24px 24px 22px; }
+.glyph svg { width: 100%; height: 72px; display: block; margin-bottom: 18px; overflow: visible; }
+.glyph b { display: block; font: 600 19px var(--display); letter-spacing: -.015em; }
+.glyph p { margin: 6px 0 0; font-size: 14.5px; color: var(--ink-2); }
+@media (max-width: 960px) { .grammar { grid-template-columns: 1fr; } }
+.bigfig { margin-top: 14px; border-radius: var(--r-l); background: var(--proof-tint); padding: 32px; }
+.bigfig .cap { fill: var(--ink-2); }
+
+/* ------- 5. components ------- */
+.kit { display: grid; grid-template-columns: 1.1fr 1fr; gap: 14px; align-items: start; }
+@media (max-width: 960px) { .kit { grid-template-columns: 1fr; } }
+.stack { display: grid; gap: 14px; }
+.cell { border-radius: var(--r-l); background: var(--ground-2); padding: 26px; }
+.cell > .label { display: block; margin-bottom: 20px; color: var(--ink); }
+
+.embed { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.form { border-radius: var(--r-m); background: var(--ground); border: 1px solid var(--line); padding: 18px; font-family: system-ui, sans-serif; }
+.form .f { height: 36px; border-radius: 8px; border: 1px solid var(--line); margin-top: 8px; background: var(--ground); }
+.form .lbl { font-size: 12px; color: var(--ink-2); margin-top: 10px; }
+.form .challenge { margin-top: 14px; border-radius: 12px; background: var(--proof-tint); padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-family: var(--sans); }
+.form .challenge b { font: 600 15px var(--display); display: block; } .form .challenge span { font-size: 13px; color: var(--ink-2); }
+
+.seal { display: inline-grid; place-items: center; width: 64px; height: 64px; border-radius: 18px; background: var(--proof); color: oklch(0.98 0.01 265); }
+.seal.sm { width: 36px; height: 36px; border-radius: 10px; }
+.record { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); }
+.record:last-child { border-bottom: 1px solid var(--line); }
+.record b { font: 600 16px var(--display); display: block; } .record span { font-size: 13.5px; color: var(--ink-2); }
+
+.standing { display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: end; }
+.standing .num { font: 600 88px/0.9 var(--display); letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.standing .num small { font: 400 22px var(--mono); color: var(--ink-2); letter-spacing: 0; margin-left: 6px; }
+.standing svg { width: 100%; height: 80px; }
+.standing-sub { display: flex; gap: 28px; margin-top: 18px; flex-wrap: wrap; font: 400 14px var(--mono); color: var(--ink-2); }
+.standing-sub b { color: var(--ink); font-weight: 500; }
+
+.pool { display: grid; gap: 8px; }
+.pool .row { display: grid; grid-template-columns: 28px 1fr auto; gap: 12px; align-items: center; font-size: 15px; }
+.pool .row .bar { height: 12px; border-radius: 999px; background: var(--noise); }
+.pool .row .n { font: 500 13px var(--mono); color: var(--ink-2); }
+.pool .row .who { font: 400 13px var(--mono); color: var(--ink-2); }
+
+.verdict .word { font: 600 34px var(--display); letter-spacing: -.03em; display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+.verdict .note { font: 400 14px/1.6 var(--mono); color: var(--ink-2); margin-top: 8px; }
+
+.steps { counter-reset: s; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.steps div { border-radius: var(--r-m); background: var(--ground-2); padding: 20px; }
+.steps div b { display: block; font: 600 18px/1.15 var(--display); letter-spacing: -.015em; margin: 28px 0 6px; }
+.steps div p { margin: 0; font-size: 14px; color: var(--ink-2); }
+.steps .counter { display: block; }
+@media (max-width: 960px) { .steps { grid-template-columns: 1fr 1fr; } } @media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }
+
+/* ------- 6. slides ------- */
+.slides { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.slide { border-radius: var(--r-l); aspect-ratio: 16 / 10; padding: 30px; display: grid; grid-template-rows: auto 1fr auto; position: relative; overflow: hidden; }
+.slide .label { opacity: .8; }
+.slide .headline { font-size: clamp(22px, 2.6vw, 34px); align-self: center; max-width: 16ch; }
+.slide .counter { position: absolute; right: 24px; bottom: 20px; }
+.slide .foot { font: 400 12px var(--mono); color: var(--ink-2); }
+@media (max-width: 760px) { .slides { grid-template-columns: 1fr; } }
+
+.dos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.dos div { border-radius: var(--r-l); padding: 26px; }
+.dos ul { margin: 14px 0 0; padding: 0; list-style: none; font-size: 15px; }
+.dos li { padding: 9px 0; border-top: 1px solid var(--line); }
+.dos .yes { background: var(--team-tint); } .dos .no { background: var(--you-tint); }
+@media (max-width: 760px) { .dos { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Letters on a 72-unit cap height, stems 18 wide. VOIT is Lab's; P, R, F are new on the same grammar. -->
+    <clipPath id="voit">
+      <polygon points="0,0 18,0 32,50 46,0 64,0 41,72 23,72"/>
+      <path transform="translate(76 0)" clip-rule="evenodd" d="M10 0H50L60 10V62L50 72H10L0 62V10ZM18 16V56H42V16Z"/>
+      <rect x="148" y="0" width="18" height="72"/>
+      <polygon transform="translate(178 0)" points="0,0 60,0 60,16 39,16 39,72 21,72 21,16 0,16"/>
+    </clipPath>
+    <clipPath id="proof">
+      <path transform="translate(292 0)" clip-rule="evenodd" d="M0 0H44L56 12V34L44 46H18V72H0ZM18 16V30H38V16Z"/>
+      <path transform="translate(362 0)" clip-rule="evenodd" d="M0 0H44L56 12V32L47 42L64 72H44L30 46H18V72H0ZM18 16V30H38V16Z"/>
+      <path transform="translate(440 0)" clip-rule="evenodd" d="M10 0H50L60 10V62L50 72H10L0 62V10ZM18 16V56H42V16Z"/>
+      <path transform="translate(514 0)" clip-rule="evenodd" d="M10 0H50L60 10V62L50 72H10L0 62V10ZM18 16V56H42V16Z"/>
+      <polygon transform="translate(588 0)" points="0,0 60,0 60,16 18,16 18,30 52,30 52,46 18,46 18,72 0,72"/>
+    </clipPath>
+    <g id="bundle">
+      <rect y="0" width="700" height="4"/><rect y="8.5" width="700" height="4"/><rect y="17" width="700" height="4"/>
+      <rect y="25.5" width="700" height="4"/><rect y="42.5" width="700" height="4"/>
+      <rect y="51" width="700" height="4"/><rect y="59.5" width="700" height="4"/><rect y="68" width="700" height="4"/>
+    </g>
+  </defs>
+</svg>
+
+<!-- ================= 1. Cream: the language and the mark ================= -->
+<section class="hero" data-ground="cream">
+  <div class="wrap">
+    <div class="topbar">
+      <span class="mark-sm">
+        <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" style="fill:var(--proof)"/><g fill="oklch(0.98 0.01 265)"><rect x="5" y="6" width="14" height="2"/><rect x="5" y="10" width="14" height="2"/><rect x="5" y="16" width="14" height="2"/><rect x="5" y="13" width="9" height="2" style="fill:var(--you)"/></g></svg>
+        Voit Proof
+      </span>
+      <span class="counter">LANGUAGE 01 · 5 OCT 2026</span>
+    </div>
+
+    <svg class="wordmark" viewBox="-2 -2 652 76" role="img" aria-label="Voit Proof">
+      <g clip-path="url(#voit)" style="fill:var(--ink)"><use href="#bundle"/><rect y="34" width="700" height="4" style="fill:var(--you)"/></g>
+      <rect x="262" y="-2" width="3" height="76" style="fill:var(--ink)"/>
+      <rect x="238" y="34" width="24" height="4" style="fill:var(--you)"/>
+      <g clip-path="url(#proof)" style="fill:var(--proof)"><use href="#bundle"/><rect y="34" width="700" height="4" style="fill:var(--you)"/></g>
+      <rect x="648" y="34" width="14" height="4" style="fill:var(--you)"/>
+    </svg>
+    <p class="label" style="margin:18px 0 0">Turn signal into substance</p>
+
+    <h1 class="display">The Gate.</h1>
+    <p class="lede">Every application passes through a gate: a small piece of real work. Voit Proof draws that gate everywhere, in colour. Blue is proof, coral is the person, teal is the team. Warm cream, rounded tiles, big friendly type: a product people are glad to meet, not a test they are made to sit.</p>
+
+    <ol class="principles">
+      <li><span class="label">01</span><b>Colour says who.</b><span class="t">Blue is proof, coral is the candidate, teal is the employer. The same five roles on every surface.</span></li>
+      <li><span class="label">02</span><b>Tiles, not cards.</b><span class="t">One rounded, tinted container, flat, never nested. It holds a figure, a number or a screen.</span></li>
+      <li><span class="label">03</span><b>The gate is the figure.</b><span class="t">Every diagram is strokes passing gates. The one in coral is the person you're looking at.</span></li>
+      <li><span class="label">04</span><b>Two grounds, one voice.</b><span class="t">Cream for reading, charcoal for statements. Sections alternate; roles keep their names on both.</span></li>
+      <li><span class="label">05</span><b>Counted things are mono.</b><span class="t">Numbers, code, timings, labels. Prose is friendly; evidence is exact. One pixel detail: the counter.</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= 2. Charcoal: colour ================= -->
+<section data-ground="charcoal">
+  <div class="wrap">
+    <div class="head"><span class="label">02 · Colour</span><div><h2 class="headline">Five roles, two grounds.</h2><p class="body">Clay-warm neutrals carry the page. Colour is never decoration: each hue is a role, and the roles are the same in a slide, a tile, a chart or a button.</p></div></div>
+    <div class="roles">
+      <div class="role" style="background:var(--proof-tint)"><div class="swatch"><i style="background:var(--proof)"></i><i style="background:var(--proof-tint);outline:1px solid var(--line)"></i></div><div><div class="name">Proof</div><p>The product, the seal, the primary action. Verified work.</p></div></div>
+      <div class="role" style="background:var(--you-tint)"><div class="swatch"><i style="background:var(--you)"></i><i style="background:var(--you-tint);outline:1px solid var(--line)"></i></div><div><div class="name">You</div><p>The candidate in focus. Marcus. The stroke that gets through.</p></div></div>
+      <div class="role" style="background:var(--team-tint)"><div class="swatch"><i style="background:var(--team)"></i><i style="background:var(--team-tint);outline:1px solid var(--line)"></i></div><div><div class="name">Team</div><p>The employer. Priya, the shortlist, the hiring team's view.</p></div></div>
+      <div class="role" style="background:var(--flag-tint)"><div class="swatch"><i style="background:var(--flag)"></i><i style="background:var(--flag-tint);outline:1px solid var(--line)"></i></div><div><div class="name">Flag</div><p>A claim that didn't match the work. A ring, never a cross.</p></div></div>
+      <div class="role" style="background:var(--noise-tint)"><div class="swatch"><i style="background:var(--noise)"></i><i style="background:var(--noise-tint);outline:1px solid var(--line)"></i></div><div><div class="name">Noise</div><p>The pile of identical applications. Lilac, quiet, many.</p></div></div>
+    </div>
+    <div class="ground-pair">
+      <div data-ground="cream" style="background:var(--ground);color:var(--ink)"><span class="label">Ground · Cream</span><div><div class="name">Reading.</div><p>Slides that explain, the candidate's screen, docs. Tiles sit one step deeper in Oat.</p></div></div>
+      <div data-ground="charcoal" style="background:var(--ground);color:var(--ink);outline:1px solid var(--line)"><span class="label">Ground · Charcoal</span><div><div class="name">Statements.</div><p>Title, strategy, the big number. Warm, never black. Roles brighten; tints deepen.</p></div></div>
+    </div>
+    <div class="colour-rules">
+      <div><b>The role rule.</b><p>Blue, coral and teal mean proof, candidate, employer, everywhere. A button is blue because it is the product's action, not because blue is pretty.</p></div>
+      <div><b>The one-coral rule.</b><p>On any figure, exactly one stroke is coral: the person you're looking at. Everyone else is noise or ink.</p></div>
+      <div><b>No neon, no black.</b><p>Chroma stays below 0.21. Neutrals are warm. Pure black and white are prohibited. Failing test output is the only red, and only inside an editor.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3. Cream: type ================= -->
+<section data-ground="cream">
+  <div class="wrap">
+    <div class="head"><span class="label">03 · Type</span><div><h2 class="headline">A display face with a bit of character, a body that stays out of the way.</h2><p class="body">Bricolage Grotesque speaks; Hanken Grotesk explains; IBM Plex Mono counts. One pixel face for the counter, as a wink.</p></div></div>
+    <div class="scale">
+      <div class="row"><div class="spec"><b>Display</b>Bricolage 600 · 92 / 0.96 · -3.5%</div><div class="display">Turn signal into substance.</div></div>
+      <div class="row"><div class="spec"><b>Headline</b>Bricolage 600 · 54 / 1.02 · -3%</div><div class="headline">The strongest real applicants rise to the top.</div></div>
+      <div class="row"><div class="spec"><b>Title</b>Bricolage 600 · 24 / 1.15</div><div class="title">Fix one real bug. About ten minutes.</div></div>
+      <div class="row"><div class="spec"><b>Body</b>Hanken 400 · 17 / 1.55 · ≤ 60ch</div><p class="body">Marcus is good at the work, but his application looks like everyone else's, and he never hears back. The same broken system hurts honest candidates too.</p></div>
+      <div class="row"><div class="spec"><b>Label</b>Plex Mono 500 · 12 · caps · +8%</div><div class="label">Scored on the work · 3 of 3 tests · 9 min 40 s</div></div>
+      <div class="row"><div class="spec"><b>Data</b>Plex Mono 400 · 14 · tabular</div><div class="data">&lt;voit-challenge role="full-stack"&gt;&lt;/voit-challenge&gt;</div></div>
+      <div class="row"><div class="spec"><b>Counter</b>Pixelify Sans 400 · 15</div><div class="counter">05 / 13</div></div>
+    </div>
+    <div class="faces">
+      <div><span class="big" style="font-family:var(--display);font-weight:600">Bricolage Aa</span>Display and titles. Lively without being cute; sentence case; full stops on headlines.</div>
+      <div><span class="big">Hanken Aa</span>Body and buttons. Shared with Voit Lab, so the family reads as one.</div>
+      <div><span class="big" style="font-family:var(--mono)">Plex 0123</span>Everything counted, typed or labelled. Code chips, timings, scores.</div>
+      <div><span class="big" style="font-family:var(--pixel)">Pixel 05</span>The slide counter and nothing else. The one detail from Handshake we kept.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4. Charcoal: the gate ================= -->
+<section data-ground="charcoal">
+  <div class="wrap">
+    <div class="head"><span class="label">04 · The gate</span><div><h2 class="headline">Every figure is strokes passing gates.</h2><p class="body">A gate is a test. A stroke is an attempt. Colour says whose. This is the one drawing Voit Proof knows how to make, and it makes every diagram out of it: the embed, the score, the ranked pool.</p></div></div>
+    <div class="grammar">
+      <div class="glyph">
+        <svg viewBox="0 0 300 72"><g class="s-line" stroke-width="2"><line x1="110" y1="8" x2="110" y2="64"/><line x1="170" y1="8" x2="170" y2="64"/><line x1="230" y1="8" x2="230" y2="64"/></g><line class="s-you" x1="10" y1="36" x2="280" y2="36" stroke-width="5" stroke-linecap="round"/><circle class="f-you" cx="280" cy="36" r="6"/></svg>
+        <b>Pass</b><p>The coral stroke goes through every gate and keeps going. A dot at the end: it arrived.</p></div>
+      <div class="glyph">
+        <svg viewBox="0 0 300 72"><g class="s-line" stroke-width="2"><line x1="110" y1="8" x2="110" y2="64"/><line x1="170" y1="8" x2="170" y2="64"/><line x1="230" y1="8" x2="230" y2="64"/></g><line class="s-you" x1="10" y1="36" x2="166" y2="36" stroke-width="5" stroke-linecap="round"/><line class="s-you" x1="166" y1="24" x2="166" y2="48" stroke-width="4" stroke-linecap="round"/></svg>
+        <b>Not yet</b><p>The stroke stops at a gate with a bar. Calm, coral, no red. The next attempt starts from here.</p></div>
+      <div class="glyph">
+        <svg viewBox="0 0 300 72"><g class="s-line" stroke-width="2"><line x1="110" y1="8" x2="110" y2="64"/><line x1="170" y1="8" x2="170" y2="64"/><line x1="230" y1="8" x2="230" y2="64"/></g><line class="s-you" x1="10" y1="36" x2="280" y2="36" stroke-width="5" stroke-linecap="round"/><circle class="s-flag" cx="110" cy="36" r="12" fill="none" stroke-width="4"/></svg>
+        <b>Flag</b><p>A ring on the crossing: the résumé said one thing, the work said another. For a human to read, never an auto-reject.</p></div>
+      <div class="glyph">
+        <svg viewBox="0 0 300 72"><g class="s-noise" stroke-width="4" stroke-linecap="round"><line x1="10" y1="12" x2="120" y2="12"/><line x1="10" y1="24" x2="120" y2="24"/><line x1="10" y1="48" x2="120" y2="48"/><line x1="10" y1="60" x2="120" y2="60"/></g><line class="s-you" x1="10" y1="36" x2="120" y2="36" stroke-width="5" stroke-linecap="round"/><g class="s-noise" stroke-width="4" stroke-linecap="round" opacity=".55"><line x1="150" y1="12" x2="290" y2="12"/><line x1="150" y1="24" x2="290" y2="24"/><line x1="150" y1="36" x2="290" y2="36"/><line x1="150" y1="48" x2="290" y2="48"/><line x1="150" y1="60" x2="290" y2="60"/></g></svg>
+        <b>Noise</b><p>The pile. Identical lilac strokes, all the same length, because they all say the same thing. One of them is Marcus.</p></div>
+      <div class="glyph">
+        <svg viewBox="0 0 300 72"><g class="s-line" stroke-width="2"><line x1="110" y1="8" x2="110" y2="64"/><line x1="170" y1="8" x2="170" y2="64"/><line x1="230" y1="8" x2="230" y2="64"/></g><g class="s-ink" stroke-width="3" stroke-linecap="round" opacity=".45"><line x1="10" y1="18" x2="258" y2="18"/><line x1="10" y1="28" x2="250" y2="28"/><line x1="10" y1="46" x2="262" y2="46"/><line x1="10" y1="56" x2="246" y2="56"/></g><line class="s-you" x1="10" y1="37" x2="268" y2="37" stroke-width="5" stroke-linecap="round"/></svg>
+        <b>Compared</b><p>How they worked, beside how strong developers worked: a faint ink bundle behind the coral stroke.</p></div>
+      <div class="glyph">
+        <svg viewBox="0 0 300 72"><g stroke-width="5" stroke-linecap="round"><line class="s-you" x1="10" y1="10" x2="280" y2="10"/><line class="s-team" x1="10" y1="23" x2="250" y2="23"/><line class="s-team" x1="10" y1="36" x2="200" y2="36"/><line class="s-noise" x1="10" y1="49" x2="130" y2="49"/><line class="s-noise" x1="10" y1="62" x2="90" y2="62"/></g></svg>
+        <b>Ranked pool</b><p>Ordered by how far each got. Longest first, nobody removed. The team's view of the gate from the other side.</p></div>
+    </div>
+
+    <div class="bigfig">
+      <span class="label" style="color:var(--ink)">Fig. 4 · The embed, drawn in the grammar</span>
+      <svg class="fig" viewBox="0 0 1040 200" style="margin-top:18px" role="img" aria-label="One line, candidate applies, scored on the work, ranked pool">
+        <!-- step 1: the line in a form -->
+        <rect x="0" y="20" width="200" height="130" rx="14" class="f-ground"/><g class="s-line" stroke-width="2" opacity=".5"><line x1="20" y1="48" x2="120" y2="48"/><line x1="20" y1="72" x2="160" y2="72"/></g>
+        <rect x="20" y="92" width="160" height="34" rx="8" class="f-tint"/><text x="30" y="114" style="font:500 11px var(--mono);fill:var(--proof)">&lt;voit-challenge/&gt;</text>
+        <text class="cap" x="0" y="178">01 · One line, any form</text>
+        <!-- arrow -->
+        <g class="s-line" stroke-width="2" stroke-linecap="round"><line x1="222" y1="85" x2="250" y2="85"/><polyline points="244,79 250,85 244,91" fill="none"/></g>
+        <!-- step 2: candidate applies -->
+        <rect x="272" y="20" width="200" height="130" rx="14" class="f-ground"/><g class="s-line" stroke-width="2"><line x1="360" y1="40" x2="360" y2="130"/><line x1="400" y1="40" x2="400" y2="130"/><line x1="440" y1="40" x2="440" y2="130"/></g>
+        <line class="s-you" x1="290" y1="85" x2="397" y2="85" stroke-width="5" stroke-linecap="round"/><line class="s-you" x1="397" y1="73" x2="397" y2="97" stroke-width="4" stroke-linecap="round"/>
+        <text class="cap" x="272" y="178">02 · Candidate applies</text>
+        <g class="s-line" stroke-width="2" stroke-linecap="round"><line x1="494" y1="85" x2="522" y2="85"/><polyline points="516,79 522,85 516,91" fill="none"/></g>
+        <!-- step 3: scored -->
+        <rect x="544" y="20" width="200" height="130" rx="14" class="f-ground"/><g class="s-line" stroke-width="2"><line x1="632" y1="40" x2="632" y2="130"/><line x1="672" y1="40" x2="672" y2="130"/><line x1="712" y1="40" x2="712" y2="130"/></g>
+        <g class="s-ink" stroke-width="3" stroke-linecap="round" opacity=".35"><line x1="562" y1="66" x2="728" y2="66"/><line x1="562" y1="104" x2="722" y2="104"/></g>
+        <line class="s-you" x1="562" y1="85" x2="730" y2="85" stroke-width="5" stroke-linecap="round"/><circle class="f-you" cx="730" cy="85" r="6"/>
+        <text class="cap" x="544" y="178">03 · Scored on the work</text>
+        <g class="s-line" stroke-width="2" stroke-linecap="round"><line x1="766" y1="85" x2="794" y2="85"/><polyline points="788,79 794,85 788,91" fill="none"/></g>
+        <!-- step 4: ranked pool -->
+        <rect x="816" y="20" width="224" height="130" rx="14" class="f-ground"/>
+        <g stroke-width="5" stroke-linecap="round"><line class="s-you" x1="836" y1="48" x2="1016" y2="48"/><line class="s-team" x1="836" y1="68" x2="986" y2="68"/><line class="s-team" x1="836" y1="88" x2="950" y2="88"/><line class="s-noise" x1="836" y1="108" x2="900" y2="108"/><line class="s-noise" x1="836" y1="128" x2="880" y2="128"/></g>
+        <text class="cap" x="816" y="178">04 · Ranked pool, nobody removed</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 5. Cream: components ================= -->
+<section data-ground="cream">
+  <div class="wrap">
+    <div class="head"><span class="label">05 · Components</span><div><h2 class="headline">The same few parts, wherever they appear.</h2><p class="body">Pill buttons, tinted tiles, code chips, the seal, a standing, a ranked pool, a verdict. Enough to build the deck and the candidate's screen.</p></div></div>
+    <div class="kit">
+      <div class="stack">
+        <div class="cell">
+          <span class="label">Buttons</span>
+          <div class="btn-row">
+            <button class="btn">Start the challenge <svg viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="6" x2="18" y2="6"/><polyline points="13,1 18,6 13,11"/></svg></button>
+            <button class="btn soft">See where you stand</button>
+            <button class="btn you">Keep my record <svg viewBox="0 0 20 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="6" x2="18" y2="6"/><polyline points="13,1 18,6 13,11"/></svg></button>
+          </div>
+          <p style="margin:16px 0 0;font-size:14px;color:var(--ink-2);max-width:52ch">Ink pill for the one action on a screen. Blue-tint pill for the quiet second. Coral only for an action that belongs to the candidate.</p>
+        </div>
+        <div class="cell">
+          <span class="label">The embed, on an employer's page</span>
+          <div class="form">
+            <div class="lbl">Full name</div><div class="f"></div>
+            <div class="lbl">Résumé</div><div class="f" style="border-style:dashed"></div>
+            <div class="challenge"><div><b>Fix one real bug</b><span>About 10 minutes · runs in your browser</span></div><span class="seal sm"><svg width="18" height="18" viewBox="0 0 24 24"><g fill="currentColor"><rect x="5" y="6" width="14" height="2"/><rect x="5" y="10" width="14" height="2"/><rect x="5" y="16" width="14" height="2"/><rect x="5" y="13" width="9" height="2" style="fill:var(--you)"/></g></svg></span></div>
+          </div>
+          <div style="margin-top:14px"><span class="chip">&lt;voit-challenge role="full-stack"&gt;&lt;/voit-challenge&gt;</span></div>
+        </div>
+        <div class="cell">
+          <span class="label">Ranked pool · Remote full-stack · 212 applied</span>
+          <div class="pool">
+            <div class="row"><span class="n">01</span><div class="bar" style="width:96%;background:var(--you)"></div><span class="who">you · 3/3 · 9:40</span></div>
+            <div class="row"><span class="n">02</span><div class="bar" style="width:88%;background:var(--team)"></div><span class="who">3/3 · 12:05</span></div>
+            <div class="row"><span class="n">03</span><div class="bar" style="width:74%;background:var(--team)"></div><span class="who">3/3 · 18:30</span></div>
+            <div class="row"><span class="n">04</span><div class="bar" style="width:52%"></div><span class="who">2/3</span></div>
+            <div class="row"><span class="n">05</span><div class="bar" style="width:40%"></div><span class="who">2/3 <span class="tag flag" style="margin-left:6px">flag</span></span></div>
+            <div class="row"><span class="n">…</span><div class="bar" style="width:18%"></div><span class="who">207 more, none removed</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="cell tile proof" style="background:var(--proof-tint)">
+          <span class="label">Standing</span>
+          <div class="standing">
+            <div class="num">3<small>/ 3</small></div>
+            <svg viewBox="0 0 300 80"><g class="s-line" stroke-width="2"><line x1="100" y1="8" x2="100" y2="72"/><line x1="170" y1="8" x2="170" y2="72"/><line x1="240" y1="8" x2="240" y2="72"/></g><g class="s-ink" stroke-width="3" stroke-linecap="round" opacity=".3"><line x1="10" y1="26" x2="262" y2="26"/><line x1="10" y1="54" x2="256" y2="54"/></g><line class="s-you" x1="10" y1="40" x2="270" y2="40" stroke-width="6" stroke-linecap="round"/><circle class="f-you" cx="270" cy="40" r="7"/></svg>
+          </div>
+          <div class="standing-sub"><span><b>9:40</b> elapsed</span><span><b>2</b> runs</span><span><b>1</b> edit</span><span>stronger than <b>71%</b> of attempts</span></div>
+        </div>
+        <div class="cell verdict">
+          <span class="label">Verdict</span>
+          <svg viewBox="0 0 300 48" style="width:100%;height:48px"><g class="s-line" stroke-width="2"><line x1="110" y1="4" x2="110" y2="44"/><line x1="170" y1="4" x2="170" y2="44"/><line x1="230" y1="4" x2="230" y2="44"/></g><line class="s-you" x1="10" y1="24" x2="280" y2="24" stroke-width="5" stroke-linecap="round"/><circle class="s-flag" cx="170" cy="24" r="11" fill="none" stroke-width="4"/></svg>
+          <div class="word">Pass, with a flag <span class="tag flag">flag</span></div>
+          <div class="note">All 3 tests pass. The résumé claims five years of TypeScript; the fix was written in plain JavaScript. For Priya to read, not a rejection.</div>
+        </div>
+        <div class="cell">
+          <span class="label">The seal and a record</span>
+          <div style="display:flex;gap:18px;align-items:center;margin-bottom:18px"><span class="seal"><svg width="32" height="32" viewBox="0 0 24 24"><g fill="currentColor"><rect x="4" y="5" width="16" height="2.2"/><rect x="4" y="9.5" width="16" height="2.2"/><rect x="4" y="16.5" width="16" height="2.2"/><rect x="4" y="13" width="10" height="2.2" style="fill:var(--you)"/></g></svg></span><div><b style="font:600 18px var(--display)">Verified by Voit</b><div style="font:400 13px var(--mono);color:var(--ink-2)">proof · 3f9a2c · 5 Oct 2026</div></div></div>
+          <div class="record"><span class="seal sm"><svg width="16" height="16" viewBox="0 0 24 24"><g fill="currentColor"><rect x="5" y="6" width="14" height="2"/><rect x="5" y="10" width="14" height="2"/><rect x="5" y="16" width="14" height="2"/><rect x="5" y="13" width="9" height="2" style="fill:var(--you)"/></g></svg></span><div><b>Merge overlapping ranges</b><span>Northbeam Software · full-stack · 3/3</span></div><span class="data">9:40</span></div>
+          <div class="record"><span class="seal sm" style="background:var(--team)"><svg width="16" height="16" viewBox="0 0 24 24"><g fill="currentColor"><rect x="5" y="6" width="14" height="2"/><rect x="5" y="10" width="14" height="2"/><rect x="5" y="16" width="14" height="2"/><rect x="5" y="13" width="9" height="2" style="fill:var(--you)"/></g></svg></span><div><b>Debounce a search box</b><span>Practice · front-end · 2/3</span></div><span class="data">14:12</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px">
+      <div class="steps">
+        <div><span class="counter">01</span><b>One line, any form</b><p>A recruiter pastes the embed into the application page. Nothing else changes.</p></div>
+        <div><span class="counter">02</span><b>Candidate applies</b><p>The challenge appears inline. Fix one real bug, about ten minutes, as a guest.</p></div>
+        <div><span class="counter">03</span><b>Scored on the work</b><p>Tests pass or not, and how they worked is compared with strong developers.</p></div>
+        <div><span class="counter">04</span><b>Ranked pool</b><p>Priya opens her tracker and the strongest real applicants are at the top. Nobody is gone.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 6. Charcoal: two slides ================= -->
+<section data-ground="charcoal">
+  <div class="wrap">
+    <div class="head"><span class="label">06 · In a deck</span><div><h2 class="headline">What a slide looks like on each ground.</h2><p class="body">Charcoal for statements, cream for explanation. The counter in the corner is the only pixel on the page.</p></div></div>
+    <div class="slides">
+      <div class="slide" data-ground="charcoal" style="background:var(--ground-2);color:var(--ink)">
+        <span class="label">11 · Strategy</span>
+        <h3 class="headline">We become the standard step inside every application.</h3>
+        <span class="foot">The calibrated library · the attempt data · candidates' records</span>
+        <span class="counter">11 / 13</span>
+      </div>
+      <div class="slide" data-ground="cream" style="background:var(--ground);color:var(--ink)">
+        <span class="label">07 · Employer value</span>
+        <div style="align-self:center;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="tile team" style="padding:18px"><span class="label">Reordered</span><p>A pool sorted by real skill.</p></div>
+          <div class="tile flag" style="padding:18px"><span class="label">Checked</span><p>Résumé claims read against the work.</p></div>
+        </div>
+        <span class="foot">Nobody rejected automatically</span>
+        <span class="counter">07 / 13</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 7. Cream: do / don't ================= -->
+<section data-ground="cream">
+  <div class="wrap">
+    <div class="head"><span class="label">07 · Do and don't</span><div><h2 class="headline">What keeps it ours.</h2><p class="body">Clay's warmth and Handshake's rhythm, without becoming either.</p></div></div>
+    <div class="dos">
+      <div class="yes"><span class="label">Do</span><ul>
+        <li>Give every colour a role before you use it.</li>
+        <li>Draw the gate. Strokes, gates, one coral.</li>
+        <li>Alternate cream and charcoal; let the band do the mood.</li>
+        <li>Put counted things in mono, 13px or larger.</li>
+        <li>Keep one action per screen as the ink pill.</li>
+        <li>End headlines with a full stop.</li>
+      </ul></div>
+      <div class="no"><span class="label">Don't</span><ul>
+        <li>No neon, no gradients, no gradient text, no glass.</li>
+        <li>No nested tiles, no shadows, no side-stripe borders.</li>
+        <li>No 3D contraptions or stock illustration. Our figure is the gate.</li>
+        <li>No photos of candidates. People are strokes.</li>
+        <li>No red anywhere except a failing test inside the editor.</li>
+        <li>No em dashes. No "Oops".</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
