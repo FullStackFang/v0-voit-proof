@@ -1,7 +1,7 @@
 ## 1. Mockup and content (founder approves before any code)
 
-- [ ] 1.1 Static mockup `mockups/judge-the-ai.html` in The Gate: a decide item, a rank item, a write item, the end profile, and the embed inside a plain application form
-- [ ] 1.2 Founder approves the mockup
+- [x] 1.1 Static mockup `mockups/judge-the-ai.html` in The Gate: a decide item, a rank item, a write item, the end profile, and the embed inside a plain application form
+- [x] 1.2 Founder approves the mockup
 - [ ] 1.3 Write the 12 items of `education-platform-engineer` in full (artifact, question, options, answer, reason, rubric) as a reviewable draft
 - [ ] 1.4 Founder approves the items, the employer name and Supabase
 
