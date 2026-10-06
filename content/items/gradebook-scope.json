@@ -1,0 +1,20 @@
+{
+  "id": "gradebook-scope",
+  "kind": "gold",
+  "area": "tenancy",
+  "format": "decide",
+  "artifact": {
+    "kind": "code",
+    "label": "AI suggestion · gradebook.ts",
+    "body": "// Fetch grades for the teacher's gradebook\nexport async function getGrades(teacherId: string, courseId: string) {\n  return db.grade.findMany({\n    where: { courseId },\n    include: { student: true },\n  });\n}"
+  },
+  "question": "The assistant says this is ready to merge. What do you do?",
+  "options": [
+    "Merge it. The course id already scopes the grades.",
+    "Send it back. Nothing checks that this teacher teaches the course.",
+    "Send it back. It needs pagination first.",
+    "Merge it, then add an index on courseId."
+  ],
+  "answer": 1,
+  "reason": "teacherId is never used, so any teacher who knows a course id can read that course's grades."
+}

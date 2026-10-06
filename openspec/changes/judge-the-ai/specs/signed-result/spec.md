@@ -1,11 +1,11 @@
 ## ADDED Requirements
 
 ### Requirement: Results are signed
-On finish the system SHALL issue a compact JWS signed with an Ed25519 key held only by the server. The payload SHALL contain the session id, pack, mode, profile, total time, flag counts and issued-at time, and SHALL contain no answers.
+On finish the system SHALL issue a compact JWS signed with an Ed25519 key held only by the server. The payload SHALL contain the session id, pack, mode, the ids of the items served, the profile, the write answer's text, total time, flag counts and issued-at time. It SHALL contain no option choices and no answers to decide, rank or open items.
 
 #### Scenario: Token issued
 - **WHEN** a session finishes
-- **THEN** the response contains a JWS whose payload has those fields and no answer text or option choices
+- **THEN** the response contains a JWS whose payload has those fields, including the served item ids and the written answer, and no option choices
 
 ### Requirement: The public key is published
 The system SHALL serve the public key at `/.well-known/voit-key`.
@@ -19,7 +19,7 @@ The system SHALL provide a `/verify` page where a pasted token is checked and it
 
 #### Scenario: Genuine token
 - **WHEN** a token issued by the server is pasted into `/verify`
-- **THEN** the page shows it as genuine with its profile, mode and flags
+- **THEN** the page shows it as genuine with its profile, mode, flags and written answer
 
 #### Scenario: Tampered token
 - **WHEN** a token's payload is altered and pasted into `/verify`

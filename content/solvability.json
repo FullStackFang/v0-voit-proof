@@ -1,0 +1,153 @@
+{
+  "runAt": "2026-10-06T02:49:42.981Z",
+  "pack": "education-platform-engineer",
+  "models": [
+    "claude:claude-opus-5-5",
+    "codex",
+    "ollama:gpt-oss:120b-cloud"
+  ],
+  "triesPerModel": 5,
+  "target": 0.3,
+  "items": [
+    {
+      "id": "gradebook-scope",
+      "format": "decide",
+      "retired": false,
+      "tries": 15,
+      "right": 15,
+      "unreadable": 0,
+      "rate": 1,
+      "byModel": {
+        "claude:claude-opus-5-5": {
+          "tries": 5,
+          "right": 5
+        },
+        "codex": {
+          "tries": 5,
+          "right": 5
+        },
+        "ollama:gpt-oss:120b-cloud": {
+          "tries": 5,
+          "right": 5
+        }
+      }
+    },
+    {
+      "id": "merge-duplicates",
+      "format": "rank",
+      "retired": false,
+      "tries": 15,
+      "right": 7,
+      "unreadable": 0,
+      "rate": 0.4666666666666667,
+      "byModel": {
+        "claude:claude-opus-5-5": {
+          "tries": 5,
+          "right": 1
+        },
+        "codex": {
+          "tries": 5,
+          "right": 5
+        },
+        "ollama:gpt-oss:120b-cloud": {
+          "tries": 5,
+          "right": 1
+        }
+      }
+    },
+    {
+      "id": "consent-age",
+      "format": "decide",
+      "retired": false,
+      "tries": 15,
+      "right": 15,
+      "unreadable": 0,
+      "rate": 1,
+      "byModel": {
+        "claude:claude-opus-5-5": {
+          "tries": 5,
+          "right": 5
+        },
+        "codex": {
+          "tries": 5,
+          "right": 5
+        },
+        "ollama:gpt-oss:120b-cloud": {
+          "tries": 5,
+          "right": 5
+        }
+      }
+    },
+    {
+      "id": "due-date-zone",
+      "format": "decide",
+      "retired": false,
+      "tries": 15,
+      "right": 15,
+      "unreadable": 0,
+      "rate": 1,
+      "byModel": {
+        "claude:claude-opus-5-5": {
+          "tries": 5,
+          "right": 5
+        },
+        "codex": {
+          "tries": 5,
+          "right": 5
+        },
+        "ollama:gpt-oss:120b-cloud": {
+          "tries": 5,
+          "right": 5
+        }
+      }
+    },
+    {
+      "id": "grade-history",
+      "format": "decide",
+      "retired": false,
+      "tries": 15,
+      "right": 15,
+      "unreadable": 0,
+      "rate": 1,
+      "byModel": {
+        "claude:claude-opus-5-5": {
+          "tries": 5,
+          "right": 5
+        },
+        "codex": {
+          "tries": 5,
+          "right": 5
+        },
+        "ollama:gpt-oss:120b-cloud": {
+          "tries": 5,
+          "right": 5
+        }
+      }
+    },
+    {
+      "id": "bad-deploy",
+      "format": "rank",
+      "retired": false,
+      "tries": 15,
+      "right": 10,
+      "unreadable": 0,
+      "rate": 0.6666666666666666,
+      "byModel": {
+        "claude:claude-opus-5-5": {
+          "tries": 5,
+          "right": 5
+        },
+        "codex": {
+          "tries": 5,
+          "right": 5
+        },
+        "ollama:gpt-oss:120b-cloud": {
+          "tries": 5,
+          "right": 0
+        }
+      }
+    }
+  ],
+  "packRate": 0.8555555555555555,
+  "meetsTarget": false
+}

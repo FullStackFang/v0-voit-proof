@@ -1,0 +1,17 @@
+{
+  "id": "extension-penalty",
+  "kind": "open",
+  "area": "rules",
+  "format": "decide",
+  "artifact": {
+    "kind": "text",
+    "label": "Support ticket",
+    "body": "A teacher extended an essay deadline by two days for the whole class. One student had already submitted late, before the extension, and got the 10% late penalty. The assistant asks: should the system remove it automatically?"
+  },
+  "question": "What should the system do?",
+  "options": [
+    "Remove the penalty automatically.",
+    "Keep it. It was late when submitted.",
+    "Ask the teacher when they extend a deadline."
+  ]
+}

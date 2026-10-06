@@ -1,0 +1,18 @@
+{
+  "id": "school-isolation",
+  "kind": "open",
+  "area": "tenancy",
+  "format": "decide",
+  "artifact": {
+    "kind": "text",
+    "label": "The assistant's proposal",
+    "body": "Every school shares one Postgres database. To keep schools apart, I will add WHERE school_id = $current to every query and a lint rule that flags queries without it."
+  },
+  "question": "Which would you choose to keep schools' data apart?",
+  "options": [
+    "The proposal: a filter in every query, enforced by lint.",
+    "Row-level security in Postgres, keyed on the school.",
+    "A separate schema per school.",
+    "A separate database per school."
+  ]
+}

@@ -17,16 +17,18 @@ Family: `../v0-voit` (research sim), `../v0-voit-lab` (workshop arena). This rep
 - **Ask before anything outward-facing:** GitHub remote, Vercel, public artifact links. Nothing is pushed or deployed yet.
 - Before building, name the product slice in one sentence and get a yes. Do not offer menus of artifacts.
 
-## State (2026-10-05)
+## State (2026-10-06)
 
-- Repo initialised locally on `master`, four commits, no remote.
-- `PRODUCT.md`, `DESIGN.md`, `mockups/language.html`: the approved design language **The Gate** (warm cream and charcoal grounds; five colour roles: proof blue, you coral, team teal, flag yellow, noise lilac; rounded tiles; pill buttons; Bricolage Grotesque, Hanken Grotesk, IBM Plex Mono, Pixelify Sans for one counter). Founder's references: Clay (warmth, tiles) and Handshake AI (section rhythm, mono and pixel details); Handshake's neon palette and Lab's paper-and-rules were rejected.
-- `deck/` is **untracked**: a half-built deck (slides 1 to 4 of 13) restored from history so the founder could look at it. Its fate is undecided. Do not commit it or continue it unless asked.
-- No product code exists yet. No `package.json`, no framework chosen.
+- Remote: https://github.com/FullStackFang/v0-voit-proof (branch `master`). Repo privacy not yet confirmed; `content/` holds every answer. Today's build is **not committed**.
+- `PRODUCT.md`, `DESIGN.md`, `mockups/language.html`: the design language **The Gate**. `mockups/judge-the-ai.html`: the approved demo-flow mockup, 9 screens (form, decide, practice feedback, rank, write, end view, `/pool`, `/verify`, `/practice`), approved 2026-10-06. Build the pages from it.
+- `deck/` is **untracked and ignored**. Do not commit it or continue it unless asked.
+- Slice 1 (Variant C: deterministic scoring, no AI grader, write items unscored and carried as written) is being built from `openspec/changes/judge-the-ai/` (`/opsx:apply judge-the-ai`); `tasks.md` is the progress record. Server side is done and tested: item bank with `retired`, set drawing, scoring, label feed and report, signed results, `/.well-known/voit-key`, `POST /api/sessions` and `/api/sessions/:id/answers` (with CORS for the embed), and a solvability script that is out of MVP scope (unused tooling; a first run found models solve 86% of gold items). `npm test` runs everything; no test touches the network or the database.
+- Storage: the shared `v0-voit-lab` Supabase project (`soihacnbczjlugocwzou`), own `proof` schema. Migration **applied** 2026-10-05; `pgStore` checked by hand with one full embed session (test rows removed). Local `.env` (gitignored) holds `DATABASE_URL`, copied from `../v0-voit-lab/.env.local` (`TEST_DATABASE_URL`, session pooler), and `VOIT_SIGNING_KEY`. The Supabase MCP in this environment is signed in to a different account and cannot see this project; use the connection string. On Vercel later, switch to the transaction pooler (port 6543).
 
 ## Next steps
 
-1. **Founder reviews the OpenSpec change `openspec/changes/judge-the-ai/`** (proposal, design, specs, tasks; validates strict) ("Judge the AI": candidates judge AI output in decide, rank and write items; gold items scored, open items become labels). It replaced the bug-fix challenge on 2026-10-05. Open questions at the end of design.md (Supabase, fictional employer name). Specs live in OpenSpec, not docs/superpowers. On approval: `/opsx:apply`, starting with tasks group 1 (mockup and items for founder approval).
-2. Decide the untracked `deck/` folder's fate: finish, delete, or leave.
+1. **Build the demo** (`/opsx:apply judge-the-ai`, remaining tasks in `tasks.md`): 5.4 `/verify`, 5.5 `/pool`, then group 6 (the `<voit-challenge>` player in `src/embed/`, built to `public/embed.js`, shadow DOM, styled from the mockup; demo application form page; `/practice`). Server pieces to reuse: `src/server/sessions.ts` (`startSession`, `submitAnswer`), `result.ts` (`verifyResult`, `toPublicJwk`), `/.well-known/voit-key`, `deps.ts` (CORS for the embed). Goal: the founder clicks through the whole flow with `npm run dev` on the real database.
+2. Founder: confirm the GitHub repo is private, then commit and push (everything since the mockup commit is uncommitted).
+3. Decide the untracked `deck/` folder's fate.
 
 Founder's direction, learned the hard way on 2026-10-05: simple, game-like nuggets of judgment, not multi-step interviews or long flows.

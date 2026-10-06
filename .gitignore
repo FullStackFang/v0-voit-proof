@@ -4,3 +4,9 @@ node_modules/
 .playwright-mcp/
 .superpowers/
 deck/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+.env
+.env*.local
+public/embed.js

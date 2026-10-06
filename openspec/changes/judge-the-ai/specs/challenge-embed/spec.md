@@ -22,7 +22,7 @@ The element SHALL render in a shadow root in The Gate's design language, so the 
 - **THEN** the challenge's appearance is unchanged
 
 ### Requirement: The three formats are playable
-The element SHALL render decide items as options to pick, rank items as a list to reorder (by drag and by keyboard), and write items as a text box limited to 280 characters with paste blocked.
+The element SHALL show the consent line before the first item, then render decide items as options to pick, rank items as a list to reorder (by drag and by keyboard), and write items as a text box limited to 280 characters with paste blocked.
 
 #### Scenario: Rank by keyboard
 - **WHEN** the candidate focuses a rank option and presses the move-up key

@@ -1,0 +1,18 @@
+{
+  "id": "review-before-send",
+  "kind": "open",
+  "area": "ai-in-the-loop",
+  "format": "rank",
+  "artifact": {
+    "kind": "text",
+    "label": "Messages the assistant can draft",
+    "body": "Fernhill wants the assistant to draft messages that a teacher can send. Not every message needs the same care."
+  },
+  "question": "Put these in order, from the one a teacher must check most closely to the least.",
+  "options": [
+    "Feedback on a practice quiz",
+    "A note that a student's work may be plagiarised",
+    "A reminder that an assignment is due Friday",
+    "A report card comment"
+  ]
+}

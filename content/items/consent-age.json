@@ -1,0 +1,20 @@
+{
+  "id": "consent-age",
+  "kind": "gold",
+  "area": "rules",
+  "format": "decide",
+  "artifact": {
+    "kind": "code",
+    "label": "AI suggestion · signup.ts",
+    "body": "// Fernhill rule: students under 13 need a parent's consent\nfunction needsParentConsent(birthDate: Date, today = new Date()) {\n  return today.getFullYear() - birthDate.getFullYear() < 13;\n}"
+  },
+  "question": "A student born on 20 November 2013 signs up on 5 October 2026. What does this return?",
+  "options": [
+    "true, which is right. They are 12.",
+    "false, which is right. They are 13.",
+    "true, which is wrong. They are 13.",
+    "false, which is wrong. They are 12 and need consent."
+  ],
+  "answer": 3,
+  "reason": "It subtracts years only. 2026 minus 2013 is 13, but their birthday has not come yet this year, so they are 12."
+}

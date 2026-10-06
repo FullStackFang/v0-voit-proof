@@ -1,0 +1,13 @@
+{
+  "id": "firewall-ssh",
+  "kind": "open",
+  "area": "ops",
+  "format": "write",
+  "artifact": {
+    "kind": "code",
+    "label": "AI suggestion · harden the grading server",
+    "body": "# Lock the server down to HTTPS only\nsudo ufw default deny incoming\nsudo ufw --force enable\nsudo ufw allow 443/tcp"
+  },
+  "question": "You are connected to this server over SSH. What goes wrong if you run this as written?",
+  "reason": "Default deny with no rule for port 22 shuts out SSH, including you."
+}

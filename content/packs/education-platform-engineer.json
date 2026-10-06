@@ -1,0 +1,18 @@
+{
+  "id": "education-platform-engineer",
+  "name": "Education platform engineer · Fernhill Learning",
+  "items": [
+    "gradebook-scope",
+    "merge-duplicates",
+    "firewall-ssh",
+    "consent-age",
+    "essay-grader",
+    "due-date-zone",
+    "grade-history",
+    "bad-deploy",
+    "school-isolation",
+    "extension-penalty",
+    "review-before-send",
+    "big-ai-pr"
+  ]
+}

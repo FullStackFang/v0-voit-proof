@@ -1,0 +1,20 @@
+{
+  "id": "due-date-zone",
+  "kind": "gold",
+  "area": "ai-code",
+  "format": "decide",
+  "artifact": {
+    "kind": "code",
+    "label": "AI suggestion · submissions.ts",
+    "body": "// Due dates are stored as \"2026-10-05\" and mean 11:59 pm in the school's time zone\nconst isLate = submittedAt > new Date(assignment.dueDate);"
+  },
+  "question": "A student in New York submits at 9:00 pm on 4 October, a day early. What happens?",
+  "options": [
+    "Marked late.",
+    "On time, as it should be.",
+    "It throws, because the date has no time.",
+    "On time only if the server runs in New York."
+  ],
+  "answer": 0,
+  "reason": "A date-only string parses as midnight UTC, which is 8:00 pm on 4 October in New York, so a 9:00 pm submission counts as late."
+}

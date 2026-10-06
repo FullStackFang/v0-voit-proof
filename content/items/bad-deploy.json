@@ -1,0 +1,25 @@
+{
+  "id": "bad-deploy",
+  "kind": "gold",
+  "area": "ops",
+  "format": "rank",
+  "artifact": {
+    "kind": "log",
+    "label": "Grades page, 6 minutes after a deploy",
+    "body": "14:02  deploy  web 2026.10.05-3  by ci\n14:04  error   GET /grades 500  TypeError: Cannot read properties of undefined (reading 'termId')\n14:10  error   GET /grades 500  x 1,912 in 6 min, every school\nassistant: I have a one-line fix ready. Ship it forward?"
+  },
+  "question": "Put these in the order you would do them.",
+  "options": [
+    "Check the errors have stopped",
+    "Write up what happened for the schools",
+    "Roll back to the previous deploy",
+    "Find the cause in the deploy's changes"
+  ],
+  "answer": [
+    2,
+    0,
+    3,
+    1
+  ],
+  "reason": "Every school is down: stop it with a known-good rollback first, confirm, then fix calmly. An untested fix forward can make it worse."
+}

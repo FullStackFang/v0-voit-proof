@@ -1,0 +1,25 @@
+{
+  "id": "merge-duplicates",
+  "kind": "gold",
+  "area": "records",
+  "format": "rank",
+  "artifact": {
+    "kind": "code",
+    "label": "AI suggestion · merge-duplicates.sql",
+    "body": "-- Merge duplicate students (same email, same school)\nUPDATE enrollments e SET student_id = d.keep_id\n  FROM duplicates d WHERE e.student_id = d.drop_id;\nDELETE FROM students\n  WHERE id IN (SELECT drop_id FROM duplicates);"
+  },
+  "question": "Put these in the order you would do them.",
+  "options": [
+    "Run it in production",
+    "Tell each school which records were merged",
+    "Back up the students and enrollments tables",
+    "Run it on a copy and compare the row counts"
+  ],
+  "answer": [
+    2,
+    3,
+    0,
+    1
+  ],
+  "reason": "The delete cannot be undone, so you need a way back first, then a rehearsal, then the real run, then tell schools what actually changed."
+}

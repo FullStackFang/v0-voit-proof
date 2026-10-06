@@ -120,6 +120,41 @@ section { padding: 88px 24px 104px; }
 .vc-signed { display: flex; align-items: center; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
 .vc-signed b { font: 600 15px var(--display); display: block; }
 .vc-signed span.m { font: 400 13px var(--mono); color: var(--ink-2); }
+
+/* consent line, above the first item */
+.vc-consent { margin: 20px 0 0; padding: 12px 14px; border-radius: 12px; background: var(--ground); font-size: 14px; line-height: 1.5; color: var(--ink-2); }
+.vc-consent b { color: var(--ink); font-weight: 600; }
+
+/* the written answer, carried as written */
+.vc-words { margin: 18px 0 0; padding: 14px 16px; border-radius: var(--r-m); background: var(--ground); font-size: 15px; line-height: 1.5; }
+.vc-words .label { display: block; margin-bottom: 6px; }
+
+/* ---------- /pool: the team's view ---------- */
+.pool { max-width: 760px; border-radius: var(--r-l); background: var(--ground-2); padding: 28px; }
+@media (max-width: 560px) { .pool { padding: 20px; } }
+.pool-in { margin-top: 18px; background: var(--ground); border: 1px solid var(--line); border-radius: var(--r-m); padding: 14px 16px; font: 400 13px/1.8 var(--mono); color: var(--ink-2); white-space: pre; overflow-x: auto; }
+.tier { margin-top: 22px; }
+.tier-h { display: flex; align-items: baseline; gap: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.tier-h b { font: 500 14px var(--mono); color: var(--ink); }
+.tier-h span { font: 400 13px var(--mono); color: var(--ink-2); }
+.applicant { display: grid; grid-template-columns: 140px 1fr auto; gap: 16px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.applicant .bar { height: 10px; border-radius: 999px; background: var(--team); }
+.applicant .meta { font: 400 13px var(--mono); color: var(--ink-2); text-align: right; white-space: nowrap; }
+.applicant .words { grid-column: 2 / 4; margin-top: -4px; font-size: 14px; color: var(--ink-2); }
+.tag { display: inline-block; font: 500 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 5px 8px; border-radius: 999px; margin-left: 8px; }
+.tag.flag { background: oklch(0.82 0.16 92); color: oklch(0.3 0.06 92); }
+.tag.noise { background: oklch(0.94 0.03 300); color: oklch(0.55 0.07 300); }
+.pool-foot { margin-top: 18px; font: 400 13px var(--mono); color: var(--ink-2); }
+/* /verify */
+.verdict-ok { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+.facts { display: grid; grid-template-columns: 90px 1fr; gap: 6px 16px; margin-top: 18px; font-size: 15px; }
+.facts span { font: 500 12px/1.9 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.facts b { font-weight: 500; }
+.facts b.m, .verdict-no .m { font: 400 14px var(--mono); }
+.verdict-no { background: oklch(0.94 0.03 300); font-size: 15px; }
+.verdict-no b { font: 600 17px var(--display); margin-right: 6px; }
+.verdict-no .m { color: var(--ink-2); }
+@media (max-width: 560px) { .applicant { grid-template-columns: 1fr auto; } .applicant .bar { display: none; } .applicant .words { grid-column: 1 / 3; } }
 </style>
 </head>
 <body>
@@ -139,14 +174,14 @@ section { padding: 88px 24px 104px; }
   <div class="wrap">
     <div class="topbar">
       <span class="mark-sm"><span class="seal" style="width:24px;height:24px;border-radius:7px"><svg width="24" height="24"><use href="#seal-g"/></svg></span>Voit Proof</span>
-      <span class="label">Mockup 01 · Judge the AI · 5 Oct 2026</span>
+      <span class="label">Mockup 03 · Judge the AI, demo flow · 5 Oct 2026</span>
     </div>
 
     <div class="intro">
       <span class="label" style="padding-top:6px">Slice 1</span>
       <div>
         <h1 class="headline">Judge the AI.</h1>
-        <p class="body">The player inside an application, in five screens. The candidate makes short calls on work an AI did: pick one, put steps in order, or say what is wrong in their own words. One call at a time, about ten minutes, and a per-area profile at the end.</p>
+        <p class="body">The whole demo flow: the player inside an application, the recruiter's pool, verifying a result, and practice. The candidate makes four quick calls on work an AI did, then says in their own words what is wrong with one more. About three minutes. Calls are scored by their stored answer, never by an AI; the written answer is not scored and travels as written.</p>
       </div>
     </div>
 
@@ -172,10 +207,10 @@ section { padding: 88px 24px 104px; }
                 <span class="label">Part of this application</span>
               </div>
               <p class="vc-done" style="margin-top:28px">Judge the AI.</p>
-              <p class="vc-lede">Eight short calls on code and plans an AI wrote. Pick one, put steps in order, or say what is wrong. About ten minutes.</p>
+              <p class="vc-lede">Four quick calls on code and plans an AI wrote, then one short note in your own words. About three minutes.</p>
               <div class="vc-foot" style="margin-top:4px">
                 <button class="btn">Start <svg><use href="#arrow"/></svg></button>
-                <span class="vc-hint">8 calls · about 10 min · answers are final</span>
+                <span class="vc-hint">5 steps · about 3 min · answers are final</span>
               </div>
             </div>
           </div>
@@ -190,14 +225,16 @@ section { padding: 88px 24px 104px; }
       <div class="notes">
         <span class="label">02 · Decide</span>
         <p>Pick one of two to four. Keys <code>A</code> to <code>D</code> work too.</p>
+        <p>The consent line sits above the first item only, in both modes. In practice its second half reads "Your written answer stays private."</p>
         <p>The counter is the page's one pixel detail. The server sends one item at a time and keeps the clock.</p>
       </div>
       <div>
         <div class="vc">
           <div class="vc-top">
             <span class="vc-brand"><span class="seal"><svg width="18" height="18"><use href="#seal-g"/></svg></span>Judge the AI</span>
-            <span class="vc-count">03 / 08</span>
+            <span class="vc-count">01 / 05</span>
           </div>
+          <p class="vc-consent">Your answers, without your name, help us calibrate these challenges. <b>Your written answer goes to Fernhill Learning with your application.</b></p>
           <span class="label vc-area">AI suggestion · gradebook.ts</span>
 <pre class="vc-art"><span class="c">// Fetch grades for the teacher's gradebook</span>
 export async function getGrades(teacherId: string, courseId: string) {
@@ -227,6 +264,7 @@ export async function getGrades(teacherId: string, courseId: string) {
         <span class="label">02b · Practice only</span>
         <p>In practice, a known item answers back with one line. In the application, nothing until the end.</p>
         <p>Items with no known answer say nothing either way, so the two kinds look the same.</p>
+        <p>A written answer gets its one-line insight the same way, with no "Right."</p>
       </div>
       <div>
         <div class="vc">
@@ -257,7 +295,7 @@ export async function getGrades(teacherId: string, courseId: string) {
         <div class="vc">
           <div class="vc-top">
             <span class="vc-brand"><span class="seal"><svg width="18" height="18"><use href="#seal-g"/></svg></span>Judge the AI</span>
-            <span class="vc-count">05 / 08</span>
+            <span class="vc-count">03 / 05</span>
           </div>
           <span class="label vc-area">AI suggestion · merge-duplicates.sql</span>
 <pre class="vc-art"><span class="c">-- Merge duplicate students (same email, same school)</span>
@@ -284,14 +322,14 @@ DELETE FROM students
     <div class="frame">
       <div class="notes">
         <span class="label">04 · Write</span>
-        <p>Up to 280 characters, typed. Paste is off; after a try, one quiet line says so.</p>
-        <p>An AI grader reads the answer against the item's rubric.</p>
+        <p>Always last, always one. Up to 280 characters, typed. Paste is off; after a try, one quiet line says so.</p>
+        <p>Not scored. Nothing reads it but the employer's reviewer, in the candidate's own words.</p>
       </div>
       <div>
         <div class="vc">
           <div class="vc-top">
             <span class="vc-brand"><span class="seal"><svg width="18" height="18"><use href="#seal-g"/></svg></span>Judge the AI</span>
-            <span class="vc-count">07 / 08</span>
+            <span class="vc-count">05 / 05</span>
           </div>
           <span class="label vc-area">AI suggestion · harden the grading server</span>
 <pre class="vc-art"><span class="c"># Lock the server down to HTTPS only</span>
@@ -302,8 +340,8 @@ sudo ufw allow 443/tcp</pre>
           <div class="vc-box">Enabling ufw with deny incoming before allowing port 22 drops my SSH session, and I am locked out of the box<span class="caret"></span></div>
           <div class="vc-under"><span>Paste is off here. Type it in your own words.</span><span>108 / 280</span></div>
           <div class="vc-foot">
-            <span class="vc-hint">Answers are final.</span>
-            <button class="btn">Lock it in <svg><use href="#arrow"/></svg></button>
+            <span class="vc-hint">Not scored. Fernhill reads it as you wrote it.</span>
+            <button class="btn">Finish <svg><use href="#arrow"/></svg></button>
           </div>
         </div>
       </div>
@@ -313,34 +351,183 @@ sudo ufw allow 443/tcp</pre>
     <div class="frame">
       <div class="notes">
         <span class="label">05 · The end</span>
-        <p>No single score. Each area shows what was earned out of the calls seen.</p>
+        <p>No single score. Only the scored calls appear, by area. The candidate cannot tell which of the four calls was unscored.</p>
         <p>The form now carries the signed result in a hidden field:</p>
         <p><span class="chip">&lt;input type="hidden" name="voit-result" value="eyJhbGciOiJFZERTQSJ9…"&gt;</span></p>
-        <p>It holds the profile, time and flag counts, never the answers.</p>
+        <p>It holds the served item ids, the profile, the written answer, time and flag counts. Never which options were picked.</p>
       </div>
       <div>
         <div class="vc">
           <div class="vc-top">
             <span class="vc-brand"><span class="seal"><svg width="18" height="18"><use href="#seal-g"/></svg></span>Judge the AI</span>
-            <span class="vc-count">08 / 08</span>
+            <span class="vc-count">05 / 05</span>
           </div>
           <svg viewBox="0 0 584 40" style="width:100%;height:40px;display:block;margin:22px 0 14px" aria-hidden="true">
-            <g stroke-width="2" style="stroke:var(--ink-2)"><line x1="70" y1="4" x2="70" y2="36"/><line x1="130" y1="4" x2="130" y2="36"/><line x1="190" y1="4" x2="190" y2="36"/><line x1="250" y1="4" x2="250" y2="36"/><line x1="310" y1="4" x2="310" y2="36"/><line x1="370" y1="4" x2="370" y2="36"/><line x1="430" y1="4" x2="430" y2="36"/><line x1="490" y1="4" x2="490" y2="36"/></g>
+            <g stroke-width="2" style="stroke:var(--ink-2)"><line x1="110" y1="4" x2="110" y2="36"/><line x1="210" y1="4" x2="210" y2="36"/><line x1="310" y1="4" x2="310" y2="36"/><line x1="410" y1="4" x2="410" y2="36"/><line x1="510" y1="4" x2="510" y2="36"/></g>
             <line x1="6" y1="20" x2="560" y2="20" stroke-width="5" stroke-linecap="round" style="stroke:var(--you)"/><circle cx="560" cy="20" r="6" style="fill:var(--you)"/>
           </svg>
           <p class="vc-done">Done. It is attached to your application.</p>
-          <p class="vc-lede">Here is how your calls went, area by area. Submit the form as usual.</p>
+          <p class="vc-lede">Here is how your calls went. Submit the form as usual.</p>
           <div class="vc-prof">
             <div class="row"><span>Records</span><span class="pips"><svg><use href="#pip-full"/></svg><svg><use href="#pip-half"/></svg></span><span class="v">1.5 of 2</span></div>
-            <div class="row"><span>Tenancy</span><span class="pips"><svg><use href="#pip-full"/></svg></span><span class="v">1 of 1</span></div>
-            <div class="row"><span>Rules</span><span class="pips"><svg><use href="#pip-full"/></svg><svg><use href="#pip-full"/></svg></span><span class="v">2 of 2</span></div>
-            <div class="row"><span>AI in the loop</span><span class="pips"><svg><use href="#pip-none"/></svg></span><span class="v">0 of 1</span></div>
-            <div class="row"><span>AI code</span><span class="pips"><svg><use href="#pip-full"/></svg></span><span class="v">1 of 1</span></div>
-            <div class="row"><span>Ops</span><span class="pips"><svg><use href="#pip-full"/></svg></span><span class="v">1 of 1</span></div>
+            <div class="row"><span>Rules</span><span class="pips"><svg><use href="#pip-full"/></svg></span><span class="v">1 of 1</span></div>
+          </div>
+          <div class="vc-words">
+            <span class="label">Your written answer, sent as you wrote it</span>
+            Enabling ufw with deny incoming before allowing port 22 drops my SSH session, and I am locked out of the box
           </div>
           <div class="vc-signed">
             <span class="seal" style="width:36px;height:36px;border-radius:10px"><svg width="20" height="20"><use href="#seal-g"/></svg></span>
-            <div><b>Signed by Voit</b><span class="m">3f9a2c · 9 min 40 s · Fernhill sees this, not your answers</span></div>
+            <div><b>Signed by Voit</b><span class="m">3f9a2c · 3 min 05 s</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 06 · The pool ===== -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">06 · The pool</span>
+        <p>For the recruiter, at <code>/pool</code>. Paste the <code>voit-result</code> value from each application, one per line, with a label in front.</p>
+        <p>Genuine results are ordered by gold score. Ties stay one tier, in paste order.</p>
+        <p>Flags show beside a name and never move it. Anything that does not verify is listed below, not dropped. Nothing is stored.</p>
+      </div>
+      <div>
+        <div class="pool">
+          <div class="vc-top">
+            <span class="vc-brand"><span class="seal"><svg width="18" height="18"><use href="#seal-g"/></svg></span>Ranked pool</span>
+            <span class="label">Education platform engineer</span>
+          </div>
+<pre class="pool-in">Applicant 02   eyJhbGciOiJFZERTQSJ9.eyJzZXNzaW9uSWQiOiI1ZDFj…
+Applicant 05   eyJhbGciOiJFZERTQSJ9.eyJzZXNzaW9uSWQiOiJhOTBl…
+Applicant 07   eyJhbGciOiJFZERTQSJ9.eyJzZXNzaW9uSWQiOiIwYzQ3…
+…  8 lines</pre>
+          <div class="vc-foot" style="margin-top:14px">
+            <span class="vc-hint">8 pasted</span>
+            <button class="btn">Order the pool <svg><use href="#arrow"/></svg></button>
+          </div>
+
+          <div class="tier">
+            <div class="tier-h"><b>3 of 3</b><span>1 applicant</span></div>
+            <div class="applicant"><span>Applicant 07</span><div class="bar" style="width:100%"></div><span class="meta">3 min 12 s</span>
+              <span class="words">"Port 22 is never opened, so the moment ufw is on, SSH is refused and you can't get back in."</span></div>
+          </div>
+          <div class="tier">
+            <div class="tier-h"><b>2.5 of 3</b><span>2 applicants, tied, in paste order</span></div>
+            <div class="applicant"><span>Applicant 02</span><div class="bar" style="width:83%"></div><span class="meta">2 min 40 s<span class="tag flag">2 pastes</span></span>
+              <span class="words">"Nothing checks the teacher teaches the course before returning grades."</span></div>
+            <div class="applicant"><span>Applicant 11</span><div class="bar" style="width:83%"></div><span class="meta">3 min 48 s</span>
+              <span class="words">"The essay goes into the prompt, so a student can tell the model to give them an A."</span></div>
+          </div>
+          <div class="tier">
+            <div class="tier-h"><b>2 of 3</b><span>2 applicants, tied, in paste order</span></div>
+            <div class="applicant"><span>Applicant 05</span><div class="bar" style="width:67%"></div><span class="meta">4 min 02 s</span>
+              <span class="words">"Back up first. The delete is the step you can't take back."</span></div>
+            <div class="applicant"><span>Applicant 09</span><div class="bar" style="width:67%"></div><span class="meta">2 min 55 s<span class="tag flag">20 s away</span></span>
+              <span class="words">"I'd check the migration on a copy of real data before anything else."</span></div>
+          </div>
+          <div class="tier">
+            <div class="tier-h"><b>1 of 3</b><span>1 applicant</span></div>
+            <div class="applicant"><span>Applicant 03</span><div class="bar" style="width:33%"></div><span class="meta">1 min 50 s</span>
+              <span class="words">"Looks fine, maybe add more tests."</span></div>
+          </div>
+          <div class="tier unverified">
+            <div class="tier-h"><b>Unverified</b><span>2 lines, kept, not ordered</span></div>
+            <div class="applicant"><span>Applicant 04</span><span></span><span class="meta">signature does not match<span class="tag noise">not genuine</span></span></div>
+            <div class="applicant"><span>Applicant 13</span><span></span><span class="meta">not a token<span class="tag noise">unverified</span></span></div>
+          </div>
+          <p class="pool-foot">8 pasted · 6 ordered · 2 unverified · nobody removed · nothing stored</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 07 · Verify ===== -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">07 · Verify</span>
+        <p>At <code>/verify</code>, for anyone holding a result. Paste one token; it is checked against the public key at <code>/.well-known/voit-key</code>.</p>
+        <p>Genuine shows everything the token carries. Not genuine shows nothing from it, so a forged profile is never displayed.</p>
+      </div>
+      <div style="display:grid;gap:14px">
+        <div class="pool">
+          <div class="vc-top">
+            <span class="vc-brand"><span class="seal"><svg width="18" height="18"><use href="#seal-g"/></svg></span>Verify a result</span>
+            <span class="label">Checked in your browser</span>
+          </div>
+<pre class="pool-in">eyJhbGciOiJFZERTQSIsImtpZCI6IjIwMjYtMTAtMDUifQ.eyJzZXNzaW9uSWQiOiI1ZDFj…</pre>
+          <div class="vc-foot" style="margin-top:14px">
+            <span class="vc-hint">One token</span>
+            <button class="btn">Check it <svg><use href="#arrow"/></svg></button>
+          </div>
+          <div class="verdict-ok">
+            <div class="vc-signed" style="margin-top:0">
+              <span class="seal" style="width:36px;height:36px;border-radius:10px"><svg width="20" height="20"><use href="#seal-g"/></svg></span>
+              <div><b>Genuine.</b><span class="m">Signed by Voit · 5 Oct 2026, 14:07 · key 2026-10-05</span></div>
+            </div>
+            <div class="facts">
+              <span>Role</span><b>Education platform engineer</b>
+              <span>Mode</span><b>Application</b>
+              <span>Time</span><b class="m">3 min 05 s</b>
+              <span>Flags</span><b class="m">20 s away · 0 pastes · 0 bulk inputs</b>
+            </div>
+            <div class="vc-prof" style="margin-top:14px">
+              <div class="row"><span>Records</span><span class="pips"><svg><use href="#pip-full"/></svg><svg><use href="#pip-half"/></svg></span><span class="v">1.5 of 2</span></div>
+              <div class="row"><span>Rules</span><span class="pips"><svg><use href="#pip-full"/></svg></span><span class="v">1 of 1</span></div>
+            </div>
+            <div class="vc-words">
+              <span class="label">Written answer, as typed</span>
+              Enabling ufw with deny incoming before allowing port 22 drops my SSH session, and I am locked out of the box
+            </div>
+          </div>
+        </div>
+        <div class="pool verdict-no">
+          <div><b>Not genuine.</b> <span class="m">The signature does not match this content. Nothing from this token is shown.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 08 · Practice ===== -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">08 · Practice</span>
+        <p>At <code>/practice</code>, for candidates. The same player with every item in the pack, and the reason after each one.</p>
+        <p>Nothing goes to an employer. The consent line says so before the first item.</p>
+      </div>
+      <div style="display:grid;gap:14px">
+        <div class="host" style="font-family:var(--sans);background:var(--ground);padding:32px">
+          <span class="mark-sm" style="font-size:15px"><span class="seal" style="width:22px;height:22px;border-radius:7px"><svg width="22" height="22"><use href="#seal-g"/></svg></span>Voit Proof</span>
+          <p class="vc-done" style="margin:28px 0 6px;font-size:34px">Practice.</p>
+          <p class="vc-lede" style="margin-bottom:22px">Every call in the pack, with the reason after each one. About ten minutes. Nothing here goes to an employer.</p>
+          <div class="vc">
+            <div class="vc-top">
+              <span class="vc-brand"><span class="seal"><svg width="18" height="18"><use href="#seal-g"/></svg></span>Practice</span>
+              <span class="vc-count">01 / 12</span>
+            </div>
+            <p class="vc-consent">Your answers, without your name, help us calibrate these challenges. <b>Your written answers stay private.</b></p>
+            <span class="label vc-area">AI suggestion · submissions.ts</span>
+<pre class="vc-art"><span class="c">// Due dates are stored as "2026-10-05" and mean 11:59 pm in the school's time zone</span>
+const isLate = submittedAt > new Date(assignment.dueDate);</pre>
+            <p class="vc-q">A student in New York submits at 9:00 pm on 4 October, a day early. What happens?</p>
+            <div class="vc-foot" style="margin-top:4px"><span class="vc-hint">4 options below · keys A to D</span></div>
+          </div>
+        </div>
+        <div class="vc">
+          <div class="vc-top">
+            <span class="vc-brand"><span class="seal"><svg width="18" height="18"><use href="#seal-g"/></svg></span>Practice</span>
+            <span class="vc-count">12 / 12</span>
+          </div>
+          <p class="vc-done" style="margin-top:22px">Done.</p>
+          <p class="vc-lede">6 of the 12 calls have a known answer. Here is how those went.</p>
+          <div class="vc-prof">
+            <div class="row"><span>Records</span><span class="pips"><svg><use href="#pip-full"/></svg><svg><use href="#pip-full"/></svg></span><span class="v">2 of 2</span></div>
+            <div class="row"><span>Tenancy</span><span class="pips"><svg><use href="#pip-full"/></svg></span><span class="v">1 of 1</span></div>
+            <div class="row"><span>Rules</span><span class="pips"><svg><use href="#pip-none"/></svg></span><span class="v">0 of 1</span></div>
+            <div class="row"><span>AI code</span><span class="pips"><svg><use href="#pip-full"/></svg></span><span class="v">1 of 1</span></div>
+            <div class="row"><span>Ops</span><span class="pips"><svg><use href="#pip-half"/></svg></span><span class="v">0.5 of 1</span></div>
+          </div>
+          <div class="vc-foot">
+            <span class="vc-hint">Your written answers stayed private.</span>
+            <button class="btn">Practise again <svg><use href="#arrow"/></svg></button>
           </div>
         </div>
       </div>

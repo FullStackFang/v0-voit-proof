@@ -1,0 +1,13 @@
+{
+  "id": "big-ai-pr",
+  "kind": "open",
+  "area": "ai-code",
+  "format": "write",
+  "artifact": {
+    "kind": "text",
+    "label": "Pull request summary",
+    "body": "PR #418  Add attendance codes  (written by the assistant)\n  migrations/0042_attendance_codes.sql   +212\n  src/attendance/*.ts                     +341  -88\n  tests                                    46 passed, 0 failed"
+  },
+  "question": "The tests pass. What is the first thing you would check before approving, and why?",
+  "reason": "Passing tests only prove what they test. Run the migration on a copy of real data, and read what the tests actually check."
+}
