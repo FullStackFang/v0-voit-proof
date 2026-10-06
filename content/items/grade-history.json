@@ -6,7 +6,7 @@
   "artifact": {
     "kind": "code",
     "label": "schema.sql and the assistant's endpoint",
-    "body": "CREATE TABLE grades (\n  id            bigint PRIMARY KEY,\n  student_id    bigint NOT NULL,\n  assignment_id bigint NOT NULL,\n  score         numeric NOT NULL,\n  updated_at    timestamptz NOT NULL DEFAULT now()\n);\n-- change-grade endpoint, written by the assistant:\nUPDATE grades SET score = $1, updated_at = now() WHERE id = $2;"
+    "body": "-- grades(id, student_id, score, updated_at)\n-- change-grade endpoint, by the assistant:\nUPDATE grades SET score = $1, updated_at = now()\n WHERE id = $2;"
   },
   "question": "A parent disputes a grade that changed last month. What can this tell you?",
   "options": [

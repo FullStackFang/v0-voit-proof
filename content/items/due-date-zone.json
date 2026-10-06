@@ -6,7 +6,7 @@
   "artifact": {
     "kind": "code",
     "label": "AI suggestion · submissions.ts",
-    "body": "// Due dates are stored as \"2026-10-05\" and mean 11:59 pm in the school's time zone\nconst isLate = submittedAt > new Date(assignment.dueDate);"
+    "body": "// dueDate \"2026-10-05\" means 11:59 pm, school time\nconst isLate = submittedAt > new Date(dueDate);"
   },
   "question": "A student in New York submits at 9:00 pm on 4 October, a day early. What happens?",
   "options": [

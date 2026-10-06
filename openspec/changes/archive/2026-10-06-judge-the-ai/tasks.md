@@ -35,18 +35,18 @@
 - [x] 5.1a Variant C rework: payload adds served item ids and the written answer, still no option choices (tests)
 - [x] 5.2 `POST /api/sessions`: embed set drawn as 3 gold + 1 open shuffled then 1 write, practice set, retired items excluded, unknown pack, exposure tracking (tests)
 - [x] 5.3 `POST /api/sessions/:id/answers`: current item only, answers final, server timing, mode-dependent feedback (reason after gold and write items in practice), signals stored, finish returns profile and token (tests)
-- [ ] 5.4 `/verify` page
-- [ ] 5.5 `/pool` page: paste labelled tokens, verify each, order by gold score, ties as tiers in paste order, unverified listed below, flags shown never reorder, nothing stored (tests)
+- [x] 5.4 `/verify` page
+- [x] 5.5 `/pool` page: paste labelled tokens, verify each, order by gold score, ties as tiers in paste order, unverified listed below, flags shown never reorder, nothing stored (tests)
 
 ## 6. The embed
 
-- [ ] 6.1 `<voit-challenge>` custom element: attributes read in one function, missing-pack message, shadow root styled from the approved mockup
-- [ ] 6.2 Decide, rank (drag and keyboard) and write (280 limit, paste blocked) views (DOM tests)
-- [ ] 6.3 Integrity signals: time away, paste attempts, bulk input (DOM tests)
-- [ ] 6.4 On finish: profile view and hidden `voit-result` input in the host form (DOM test)
-- [ ] 6.5 Consent line before the first item in both modes; demo application form page and `/practice` page
+- [x] 6.1 `<voit-challenge>` custom element: attributes read in one function, missing-pack message, shadow root styled from the approved mockup
+- [x] 6.2 Decide, rank (drag and keyboard) and write (280 limit, paste blocked) views (DOM tests)
+- [x] 6.3 Integrity signals: time away, paste attempts, bulk input (DOM tests)
+- [x] 6.4 On finish: profile view and hidden `voit-result` input in the host form (DOM test)
+- [x] 6.5 Consent line before the first item in both modes; demo application form page and `/practice` page
 
 ## 7. Verify
 
-- [ ] 7.1 All tests pass
+- [x] 7.1 All tests pass
 - [ ] 7.2 Founder plays the embed (about three minutes) and practice locally, checks a token at `/verify`, and orders a few tokens at `/pool`

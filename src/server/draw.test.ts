@@ -17,14 +17,14 @@ const PACK = "education-platform-engineer";
 const item = (id: string) => bank.items.get(id)!;
 
 describe("embed set", () => {
-  test.each([1, 2, 3, 4, 5, 6, 7, 8])("is 3 gold and 1 open decide or rank, then 1 write (seed %i)", (seed) => {
+  test.each([1, 2, 3, 4, 5, 6, 7, 8])("is 3 gold and 1 open decide or rank, and no write item (seed %i)", (seed) => {
     const set = drawSet(bank, PACK, "embed", seeded(seed))!;
-    expect(set).toHaveLength(5);
-    expect(new Set(set).size).toBe(5);
+    expect(set).toHaveLength(4);
+    expect(new Set(set).size).toBe(4);
     const calls = set.slice(0, 4).map(item);
     expect(calls.filter((i) => i.kind === "gold")).toHaveLength(3);
     expect(calls.filter((i) => i.kind === "open" && i.format !== "write")).toHaveLength(1);
-    expect(item(set[4]).format).toBe("write");
+    expect(set.map(item).some((i) => i.format === "write")).toBe(false);
   });
 
   test("draws vary across sessions", () => {
@@ -55,7 +55,7 @@ describe("retired items", () => {
     [gold("g1"), gold("g2"), gold("g3"), gold("gone", true),
       { id: "o1", kind: "open", area: "ops", format: "decide", artifact, question: "q", options: ["a", "b"] },
       { id: "w1", kind: "open", area: "ops", format: "write", artifact, question: "q" }],
-    [{ id: "p", name: "P", items: ["g1", "g2", "g3", "gone", "o1", "w1"] }],
+    [{ id: "p", name: "P", employer: "E", items: ["g1", "g2", "g3", "gone", "o1", "w1"] }],
   );
 
   test.each(["embed", "practice"] as const)("are never drawn in %s", (mode) => {

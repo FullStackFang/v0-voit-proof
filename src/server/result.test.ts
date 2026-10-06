@@ -8,6 +8,7 @@ const payload: ResultPayload = {
   mode: "embed",
   items: ["consent-age", "school-isolation", "merge-duplicates", "grade-history", "firewall-ssh"],
   profile: { records: { earned: 1.5, of: 2 }, ops: { earned: 1, of: 2 } },
+  reasoning: ["teacherId is never used", "the delete cannot be undone", "rollback first", "ask the teacher"],
   written: "Port 22 is never allowed, so SSH is refused and I am locked out.",
   totalSeconds: 185,
   flags: { timeAwaySeconds: 20, pasteAttempts: 1, bulkInputs: 0 },
@@ -33,7 +34,7 @@ describe("signed result", () => {
     const leaky = { ...payload, answers: { "consent-age": 3 }, choices: [3, 1] } as ResultPayload;
     const [, body] = (await signResult(leaky, key)).split(".");
     const claims = JSON.parse(Buffer.from(body, "base64url").toString());
-    expect(Object.keys(claims).sort()).toEqual(["flags", "iat", "items", "mode", "pack", "profile", "sessionId", "totalSeconds", "written"]);
+    expect(Object.keys(claims).sort()).toEqual(["flags", "iat", "items", "mode", "pack", "profile", "reasoning", "sessionId", "totalSeconds", "written"]);
     expect(claims.items).toEqual(payload.items);
     expect(claims.written).toBe(payload.written);
   });

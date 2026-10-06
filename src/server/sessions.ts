@@ -12,7 +12,7 @@ import type { Signals, Store } from "./store";
 export type Deps = { bank: Bank; store: Store; key: () => JWK; now: () => Date; random?: Random };
 export type Reply<T> = { status: number; body: T | { error: string } };
 
-type Served = { sessionId: string; position: number; total: number; item: PublicItem };
+type Served = { sessionId: string; role: string; employer: string; position: number; total: number; item: PublicItem };
 type Feedback = { right?: boolean; reason: string };
 type Answered = ({ done: false; item: PublicItem; position: number; total: number } | { done: true; profile: Profile; token: string }) & {
   feedback?: Feedback;
@@ -26,7 +26,9 @@ const signalsSchema = z
     bulkInputs: z.number().int().min(0).default(0),
   })
   .default({ timeAwaySeconds: 0, pasteAttempts: 0, bulkInputs: 0 });
-const answerSchema = z.object({ itemId: z.string().min(1), answer: z.unknown(), signals: signalsSchema });
+/** "What decided it?" in the candidate's words: at most 80 characters, counted as the candidate sees them. */
+const whySchema = z.string().trim().min(1).refine((s) => [...s].length <= 80);
+const answerSchema = z.object({ itemId: z.string().min(1), answer: z.unknown(), why: whySchema.optional(), signals: signalsSchema });
 
 export async function startSession(deps: Deps, input: unknown): Promise<Reply<Served>> {
   const parsed = startSchema.safeParse(input);
@@ -38,13 +40,14 @@ export async function startSession(deps: Deps, input: unknown): Promise<Reply<Se
   const at = deps.now();
   const session = await deps.store.createSession({ pack, mode, itemIds, at });
   await deps.store.served(itemIds[0], at);
-  return { status: 201, body: { sessionId: session.id, position: 1, total: itemIds.length, item: toPublic(deps.bank.items.get(itemIds[0])!) } };
+  const { name: role, employer } = deps.bank.packs.get(pack)!;
+  return { status: 201, body: { sessionId: session.id, role, employer, position: 1, total: itemIds.length, item: toPublic(deps.bank.items.get(itemIds[0])!) } };
 }
 
 export async function submitAnswer(deps: Deps, sessionId: string, input: unknown): Promise<Reply<Answered>> {
   const parsed = answerSchema.safeParse(input);
   if (!parsed.success) return { status: 400, body: { error: "itemId and answer are required" } };
-  const { itemId, answer, signals } = parsed.data;
+  const { itemId, answer, why, signals } = parsed.data;
 
   const session = await deps.store.getSession(sessionId);
   if (!session) return { status: 404, body: { error: "No such session" } };
@@ -53,12 +56,13 @@ export async function submitAnswer(deps: Deps, sessionId: string, input: unknown
 
   const item = deps.bank.items.get(itemId)!;
   if (!validAnswer(item, answer)) return { status: 400, body: { error: "That answer does not fit the item" } };
+  if (item.format !== "write" && why === undefined) return { status: 400, body: { error: "Say what decided it" } };
 
   const at = deps.now();
   const last = session.currentIndex === session.itemIds.length - 1;
   const score = scoreItem(item, answer);
   const stored = await deps.store.recordAnswer(
-    { sessionId, itemId, position: session.currentIndex, answer, servedAt: session.servedAt, answeredAt: at, score, signals },
+    { sessionId, itemId, position: session.currentIndex, answer, servedAt: session.servedAt, answeredAt: at, score, signals, why: item.format === "write" ? null : why! },
     { servedAt: at, finishedAt: last ? at : null },
   );
   // lost a race with another answer to the same item: the first answer stands
@@ -80,6 +84,7 @@ export async function submitAnswer(deps: Deps, sessionId: string, input: unknown
     mode: session.mode,
     items: session.itemIds,
     profile: profile(rows.flatMap((r) => (r.score === null ? [] : [{ area: deps.bank.items.get(r.itemId)!.area, score: r.score }]))),
+    reasoning: rows.flatMap((r) => (r.why === null ? [] : [r.why])),
     written: written ? (written.answer as string) : null,
     totalSeconds: Math.round((at.getTime() - session.startedAt.getTime()) / 1000),
     flags: rows.reduce<Signals>(

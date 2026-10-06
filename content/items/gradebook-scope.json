@@ -6,12 +6,12 @@
   "artifact": {
     "kind": "code",
     "label": "AI suggestion · gradebook.ts",
-    "body": "// Fetch grades for the teacher's gradebook\nexport async function getGrades(teacherId: string, courseId: string) {\n  return db.grade.findMany({\n    where: { courseId },\n    include: { student: true },\n  });\n}"
+    "body": "// Grades for the teacher's gradebook\nasync function getGrades(teacherId, courseId) {\n  return db.grade.findMany({ where: { courseId } });\n}"
   },
   "question": "The assistant says this is ready to merge. What do you do?",
   "options": [
     "Merge it. The course id already scopes the grades.",
-    "Send it back. Nothing checks that this teacher teaches the course.",
+    "Send it back. Nothing checks this teacher teaches it.",
     "Send it back. It needs pagination first.",
     "Merge it, then add an index on courseId."
   ],

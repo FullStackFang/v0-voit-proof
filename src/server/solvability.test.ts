@@ -52,7 +52,7 @@ describe("report", () => {
     // recorded behaviour: model-a gets consent-age right and answers no real option elsewhere; model-b is always unreadable
     const ask: Ask = async (model, prompt) => {
       if (model === "model-b") return "Hard to say.";
-      return prompt.includes("needsParentConsent") ? "D" : "E";
+      return prompt.includes("needsConsent") ? "D" : "E";
     };
     const report = await runSolvability(bank, PACK, ["model-a", "model-b"], 5, ask);
 

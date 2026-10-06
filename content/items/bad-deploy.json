@@ -6,7 +6,7 @@
   "artifact": {
     "kind": "log",
     "label": "Grades page, 6 minutes after a deploy",
-    "body": "14:02  deploy  web 2026.10.05-3  by ci\n14:04  error   GET /grades 500  TypeError: Cannot read properties of undefined (reading 'termId')\n14:10  error   GET /grades 500  x 1,912 in 6 min, every school\nassistant: I have a one-line fix ready. Ship it forward?"
+    "body": "14:02  deploy  web 2026.10.05-3\n14:04  GET /grades 500: termId is undefined\n14:10  GET /grades 500  x 1,912, every school\nassistant: One-line fix ready. Ship it forward?"
   },
   "question": "Put these in the order you would do them.",
   "options": [

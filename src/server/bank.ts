@@ -5,20 +5,32 @@ import { z } from "zod";
 export const AREAS = ["records", "tenancy", "rules", "ai-in-the-loop", "ai-code", "ops"] as const;
 
 const text = z.string().min(1);
+/** Characters as a person sees them. */
+const chars = (s: string) => [...s].length;
+const atMost = (n: number) => text.refine((s) => chars(s) <= n, `at most ${n} characters`);
+
+// Tweet-sized: every call fits the window at a glance, with no scrolling. Code and log lines must
+// fit the window's width; prose wraps as text.
+export const LIMITS = { lines: 6, work: 240, line: 60, question: 100, option: 64 } as const;
+const artifact = z
+  .strictObject({ kind: z.enum(["code", "text", "log"]), label: text, body: atMost(LIMITS.work) })
+  .refine((a) => a.body.split("\n").length <= LIMITS.lines, `the work is at most ${LIMITS.lines} lines`)
+  .refine((a) => a.kind === "text" || a.body.split("\n").every((l) => chars(l) <= LIMITS.line), `code and log lines are at most ${LIMITS.line} characters`);
+
 const common = {
   id: text,
   kind: z.enum(["gold", "open"]),
   area: z.enum(AREAS),
-  artifact: z.strictObject({ kind: z.enum(["code", "text", "log"]), label: text, body: text }),
-  question: text,
+  artifact,
+  question: atMost(LIMITS.question),
   reason: text.optional(),
   retired: z.boolean().optional(),
 };
 
 const itemSchema = z
   .discriminatedUnion("format", [
-    z.strictObject({ ...common, format: z.literal("decide"), options: z.array(text).min(2).max(4), answer: z.number().int().optional() }),
-    z.strictObject({ ...common, format: z.literal("rank"), options: z.array(text).min(3).max(5), answer: z.array(z.number().int()).optional() }),
+    z.strictObject({ ...common, format: z.literal("decide"), options: z.array(atMost(LIMITS.option)).min(2).max(4), answer: z.number().int().optional() }),
+    z.strictObject({ ...common, format: z.literal("rank"), options: z.array(atMost(LIMITS.option)).min(3).max(5), answer: z.array(z.number().int()).optional() }),
     // write items are the candidate's own words: always open, never scored; the reason is the insight shown in practice
     z.strictObject({ ...common, format: z.literal("write") }),
   ])
@@ -40,7 +52,7 @@ const itemSchema = z
       ctx.addIssue({ code: "custom", message: "answer is not an order of the options" });
   });
 
-const packSchema = z.strictObject({ id: text, name: text, items: z.array(text).min(1) });
+const packSchema = z.strictObject({ id: text, name: text, employer: text, items: z.array(text).min(1) });
 
 export type Item = z.infer<typeof itemSchema>;
 export type Pack = z.infer<typeof packSchema>;

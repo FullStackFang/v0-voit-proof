@@ -15,6 +15,8 @@ export type ResultPayload = {
   /** Ids of the items served, in order, so a later slice can stack results and avoid repeats. */
   items: string[];
   profile: Profile;
+  /** Each call's "What decided it?", as typed, in the order served; absent on tokens issued before the Why step. */
+  reasoning?: string[];
   /** The write item's text as the candidate typed it; null if none was served. */
   written: string | null;
   totalSeconds: number;
@@ -25,8 +27,8 @@ export type Verified = { genuine: true; payload: ResultPayload & { iat: number }
 export async function signResult(payload: ResultPayload, privateJwk: JWK): Promise<string> {
   const key = await importJWK(privateJwk, ALG);
   // copy named fields only, so nothing else a caller holds can reach the token
-  const { sessionId, pack, mode, items, profile, written, totalSeconds, flags } = payload;
-  return new SignJWT({ sessionId, pack, mode, items, profile, written, totalSeconds, flags })
+  const { sessionId, pack, mode, items, profile, reasoning, written, totalSeconds, flags } = payload;
+  return new SignJWT({ sessionId, pack, mode, items, profile, reasoning, written, totalSeconds, flags })
     .setProtectedHeader({ alg: ALG, kid: privateJwk.kid })
     .setIssuedAt()
     .sign(key);

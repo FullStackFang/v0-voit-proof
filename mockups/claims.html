@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voit Proof · Claims from the résumé (mockup 05)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Pixelify+Sans&display=swap" rel="stylesheet">
+<style>
+/* Static mockup: the captcha row reads the claims off the attached résumé, the candidate confirms them,
+   and the calls test exactly those claims. Builds on mockup 04, variant A. Nothing here is implementation. */
+:root {
+  --display: "Bricolage Grotesque", "Hanken Grotesk", system-ui, sans-serif;
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --pixel: "Pixelify Sans", var(--mono);
+  --r-s: 10px; --r-m: 16px; --r-l: 24px;
+  --ground: oklch(0.975 0.012 85); --ground-2: oklch(0.945 0.022 80);
+  --ink: oklch(0.23 0.015 60); --ink-2: oklch(0.47 0.015 60); --line: oklch(0.88 0.016 80);
+  --proof: oklch(0.50 0.21 265); --proof-tint: oklch(0.92 0.045 265);
+  --you: oklch(0.66 0.19 35); --you-tint: oklch(0.935 0.055 40);
+  --team: oklch(0.58 0.12 180); --team-tint: oklch(0.925 0.05 180);
+  --flag: oklch(0.82 0.16 92); --flag-tint: oklch(0.96 0.08 95);
+  --on-proof: oklch(0.98 0.01 265);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { font: 17px/1.55 var(--sans); -webkit-font-smoothing: antialiased; background: var(--ground); color: var(--ink); }
+section { padding: 88px 24px 104px; }
+.wrap { max-width: 1060px; margin: 0 auto; }
+@media (max-width: 760px) { section { padding: 48px 16px 64px; } }
+
+.label { font: 500 12px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.headline { font: 600 clamp(34px, 4.6vw, 54px)/1.02 var(--display); letter-spacing: -.03em; margin: 0 0 14px; }
+.body { max-width: 60ch; color: var(--ink-2); margin: 0; }
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-bottom: 16px; margin-bottom: 72px; border-bottom: 1px solid var(--line); }
+.mark-sm { display: flex; align-items: center; gap: 10px; font: 600 17px var(--display); }
+.intro { display: grid; grid-template-columns: 240px 1fr; gap: 24px; margin-bottom: 72px; }
+.frame { display: grid; grid-template-columns: 240px 1fr; gap: 24px; padding-top: 24px; border-top: 1px solid var(--line); margin-top: 48px; }
+.notes .label { display: block; color: var(--ink); margin-bottom: 10px; }
+.notes p { margin: 0 0 10px; font-size: 14.5px; color: var(--ink-2); max-width: 30ch; }
+.notes code { font: 400 13px var(--mono); color: var(--ink); }
+@media (max-width: 760px) { .intro, .frame { grid-template-columns: 1fr; gap: 12px; } .notes p { max-width: none; } }
+
+.seal { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: var(--proof); color: var(--on-proof); flex: none; }
+.seal svg { width: 18px; height: 18px; }
+.seal.s { width: 20px; height: 20px; border-radius: 6px; }
+.seal.s svg { width: 14px; height: 14px; }
+
+/* ---------- the employer's page ---------- */
+.stage { position: relative; max-width: 640px; border-radius: 8px; overflow: hidden; }
+.host { border: 1px solid var(--line); border-radius: 8px; background: oklch(0.99 0.004 85); padding: 28px; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: oklch(0.25 0.01 60); }
+.host h3 { margin: 0; font-size: 20px; font-weight: 700; }
+.host .sub { margin: 4px 0 20px; font-size: 14px; color: oklch(0.5 0.01 60); }
+.host label { display: block; font-size: 13px; font-weight: 600; margin: 14px 0 6px; }
+.host .in { height: 38px; border: 1px solid oklch(0.85 0.01 60); border-radius: 8px; background: oklch(0.995 0.002 85); padding: 0 12px; display: flex; align-items: center; font-size: 14px; color: oklch(0.3 0.01 60); }
+.host .in.file { border-style: dashed; color: oklch(0.55 0.01 60); }
+.host .in.file.got { border-style: solid; color: oklch(0.3 0.01 60); justify-content: space-between; }
+.host .slot { margin: 22px 0 18px; }
+.submit { display: inline-flex; align-items: center; height: 40px; padding: 0 18px; border-radius: 8px; background: oklch(0.32 0.03 250); color: oklch(0.98 0.005 250); font-size: 14px; font-weight: 600; }
+.submit.off { background: oklch(0.9 0.008 250); color: oklch(0.6 0.01 250); }
+.submit-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.submit-why { font-size: 13px; color: oklch(0.5 0.01 60); }
+
+/* ---------- the row in the form ---------- */
+.gate { max-width: 460px; padding: 14px 16px; border-radius: var(--r-m); background: var(--ground-2); border: 1px solid var(--line); font-family: var(--sans); color: var(--ink); }
+.gate-main { display: flex; align-items: center; gap: 14px; }
+.box { width: 28px; height: 28px; border-radius: 8px; border: 2px solid var(--ink-2); background: var(--ground); flex: none; display: grid; place-items: center; }
+.box.wait { opacity: .4; }
+.box.done { background: var(--proof); border-color: var(--proof); color: var(--on-proof); }
+.box.done svg { width: 16px; height: 16px; }
+.gate .what { flex: 1; min-width: 0; }
+.gate .what b { display: block; font: 600 16px/1.2 var(--display); letter-spacing: -.01em; }
+.gate .what span { font: 400 12.5px var(--mono); color: var(--ink-2); }
+.gate .by { display: grid; justify-items: center; gap: 3px; font: 500 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.gate.wait .what b { color: var(--ink-2); }
+.claims { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0 42px; }
+.claim { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: 999px; background: var(--you-tint); color: var(--ink); font: 500 13px var(--mono); }
+.claim i { width: 7px; height: 7px; border-radius: 50%; background: var(--you); }
+.claim.got { background: var(--proof-tint); }
+.claim.got i { background: var(--proof); }
+.claim.miss { background: var(--ground); box-shadow: inset 0 0 0 2px var(--flag); }
+.claim.miss i { background: var(--flag); }
+.claim.off { background: transparent; color: var(--ink-2); box-shadow: inset 0 0 0 1px var(--line); }
+.claim.off i { background: var(--line); }
+.claim .s { color: var(--ink-2); font-weight: 400; }
+
+/* ---------- the fictional résumé ---------- */
+.cv { max-width: 460px; padding: 28px 30px; background: oklch(0.995 0.002 85); border: 1px solid var(--line); border-radius: 4px; font: 400 13px/1.55 Georgia, "Times New Roman", serif; color: oklch(0.25 0.01 60); }
+.cv h4 { margin: 0; font: 700 20px Georgia, serif; }
+.cv .role { margin: 2px 0 14px; color: oklch(0.45 0.01 60); }
+.cv h5 { margin: 14px 0 4px; font: 700 11px/1.4 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: oklch(0.45 0.01 60); }
+.cv p { margin: 0 0 4px; }
+.cv mark { background: var(--you-tint); color: inherit; padding: 0 3px; border-radius: 3px; box-shadow: inset 0 -2px 0 var(--you); }
+
+/* ---------- the window ---------- */
+.dim { position: absolute; inset: 0; background: oklch(0.23 0.015 60 / .55); display: grid; place-items: center; padding: 20px; }
+.vc { width: 100%; max-width: 560px; border-radius: var(--r-l); background: var(--ground-2); padding: 24px; font: 400 16px/1.5 var(--sans); color: var(--ink); }
+.vc-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.vc-brand { display: flex; align-items: center; gap: 10px; font: 600 15px var(--display); }
+.vc-right { display: flex; align-items: center; gap: 14px; }
+.vc-count { font: 400 15px var(--pixel); letter-spacing: .05em; color: var(--ink-2); }
+.x { width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--line); display: grid; place-items: center; font: 400 15px var(--mono); color: var(--ink-2); }
+.bar { display: flex; gap: 6px; margin-top: 16px; }
+.bar i { height: 4px; flex: 1; border-radius: 999px; background: var(--line); }
+.bar i.on { background: var(--proof); }
+.vc-area { display: flex; gap: 8px; align-items: center; margin-top: 18px; }
+.vc-art { margin: 8px 0 0; background: var(--ground); border: 1px solid var(--line); border-radius: var(--r-m); padding: 14px 16px; font: 400 13px/1.6 var(--mono); white-space: pre; overflow-x: auto; }
+.vc-art .c { color: var(--ink-2); }
+.vc-q { font: 600 20px/1.2 var(--display); letter-spacing: -.02em; margin: 18px 0 12px; }
+.vc-opts { display: grid; gap: 8px; }
+.vc-opt { display: grid; grid-template-columns: 26px 1fr; gap: 12px; align-items: start; padding: 11px 14px; border-radius: var(--r-m); border: 1.5px solid var(--line); background: var(--ground); font-size: 15px; line-height: 1.4; }
+.vc-opt .k { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 7px; border: 1px solid var(--line); font: 500 12px var(--mono); color: var(--ink-2); }
+.vc-opt.on { border-color: var(--proof); background: var(--proof-tint); }
+.vc-opt.on .k { background: var(--proof); border-color: var(--proof); color: var(--on-proof); }
+.vc-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 18px; flex-wrap: wrap; }
+.vc-hint { font: 400 13px var(--mono); color: var(--ink-2); }
+.btn { display: inline-flex; align-items: center; gap: 12px; height: 48px; padding: 0 20px 0 22px; border-radius: 999px; background: var(--ink); color: var(--ground); font: 600 15.5px var(--sans); }
+.btn svg { width: 20px; height: 12px; }
+.vc-done { font: 600 24px/1.15 var(--display); letter-spacing: -.02em; margin: 18px 0 6px; }
+.vc-lede { margin: 0 0 16px; font-size: 15px; color: var(--ink-2); max-width: 46ch; }
+.vc-consent { margin: 16px 0 0; padding: 10px 12px; border-radius: 12px; background: var(--ground); font-size: 13.5px; line-height: 1.5; color: var(--ink-2); }
+.vc-consent b { color: var(--ink); font-weight: 600; }
+.confirm { display: grid; gap: 8px; }
+.confirm div { display: grid; grid-template-columns: 26px 1fr auto; gap: 12px; align-items: center; padding: 11px 14px; border-radius: var(--r-m); border: 1.5px solid var(--line); background: var(--ground); font-size: 15px; }
+.confirm .tick { width: 22px; height: 22px; border-radius: 6px; border: 2px solid var(--ink-2); display: grid; place-items: center; }
+.confirm .tick.on { background: var(--proof); border-color: var(--proof); color: var(--on-proof); }
+.confirm .tick svg { width: 13px; height: 13px; }
+.confirm .src { font: 400 12.5px var(--mono); color: var(--ink-2); }
+.confirm div.on { border-color: var(--proof); }
+.confirm div.no { color: var(--ink-2); border-style: dashed; }
+
+/* ---------- the recruiter's line ---------- */
+.pool { max-width: 640px; border-radius: var(--r-l); background: var(--ground-2); padding: 24px; }
+.applicant { display: grid; grid-template-columns: 130px 1fr; gap: 16px; align-items: start; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.applicant:first-of-type { border-top: 1px solid var(--line); margin-top: 14px; }
+.applicant .claims { margin: 0; }
+.applicant .words { margin-top: 8px; font-size: 14px; color: var(--ink-2); }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="seal-g" viewBox="0 0 24 24"><g fill="currentColor"><rect x="5" y="6" width="14" height="2"/><rect x="5" y="10" width="14" height="2"/><rect x="5" y="16" width="14" height="2"/><rect x="5" y="13" width="9" height="2" style="fill:var(--you)"/></g></symbol>
+    <symbol id="arrow" viewBox="0 0 20 12"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="6" x2="18" y2="6"/><polyline points="13,1 18,6 13,11"/></g></symbol>
+    <symbol id="check" viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<section>
+  <div class="wrap">
+    <div class="topbar">
+      <span class="mark-sm"><span class="seal" style="width:24px;height:24px;border-radius:7px"><svg width="24" height="24"><use href="#seal-g"/></svg></span>Voit Proof</span>
+      <span class="label">Mockup 05 · Claims from the résumé · 6 Oct 2026 · box drawn as in mockup 06</span>
+    </div>
+
+    <div class="intro">
+      <span class="label" style="padding-top:6px">For review</span>
+      <div>
+        <h1 class="headline">Claims from the résumé.</h1>
+        <p class="body">The captcha row from mockup 04 (variant A), now about the résumé. Attach it, and the row reads off the skills it claims that this role needs. The candidate confirms them, then answers quick calls on exactly those skills. The employer sees each claim beside how it scored. The demo ships one fictional résumé, Ada Moreno's, so the whole flow works without a real one.</p>
+      </div>
+    </div>
+
+    <!-- 01 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">01 · Before the résumé</span>
+        <p>The row waits for the résumé. Submit is grey, with one line saying why.</p>
+        <p>The box carries no slogan, only the voitProof mark (mockup 06).</p>
+      </div>
+      <div class="stage">
+        <div class="host">
+          <h3>Education platform engineer</h3>
+          <p class="sub">Fernhill Learning · Remote · Full time</p>
+          <label>Full name</label><div class="in">Ada Moreno</div>
+          <label>Email</label><div class="in">ada@example.com</div>
+          <label>Résumé</label><div class="in file">Choose a file</div>
+          <div class="slot">
+            <div class="gate wait">
+              <div class="gate-main">
+                <span class="box wait"></span>
+                <span class="what"><b>voitProof</b><span>Attach your résumé first</span></span>
+                <span class="by"><span class="seal s"><svg><use href="#seal-g"/></svg></span>Voit</span>
+              </div>
+            </div>
+          </div>
+          <div class="submit-row">
+            <span class="submit off">Submit application</span>
+            <span class="submit-why">Finish voitProof to submit.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">02 · The fictional résumé</span>
+        <p>Ada Moreno's résumé, shipped with the demo as a PDF. The skills this role asks for are marked in coral where the résumé claims them.</p>
+        <p>The role lists four: SQL, TypeScript, Linux, Python. Ada's résumé claims three.</p>
+      </div>
+      <div>
+        <div class="cv">
+          <h4>Ada Moreno</h4>
+          <p class="role">Software engineer · Lisbon · ada@example.com</p>
+          <h5>Experience</h5>
+          <p><b>Backend engineer, Tidewater Schools</b> · 2022 to now</p>
+          <p>Built the gradebook API in <mark>TypeScript</mark>; wrote and tuned the <mark>SQL</mark> behind attendance and grade reports on PostgreSQL.</p>
+          <p>Ran the school servers on <mark>Linux</mark>: deploys, backups, firewall rules.</p>
+          <p><b>Junior developer, Northgate Labs</b> · 2020 to 2022</p>
+          <p>Front-end work in React; on-call rotation.</p>
+          <h5>Skills</h5>
+          <p><mark>TypeScript</mark> · <mark>SQL</mark> · <mark>Linux</mark> · React · Git</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">03 · Résumé attached</span>
+        <p>The row lists the claims it found, in coral: the candidate's own.</p>
+        <p>Read in the candidate's browser and matched against the role's four skills. The résumé is never sent to Voit.</p>
+      </div>
+      <div class="stage">
+        <div class="host">
+          <h3>Education platform engineer</h3>
+          <p class="sub">Fernhill Learning · Remote · Full time</p>
+          <label>Full name</label><div class="in">Ada Moreno</div>
+          <label>Email</label><div class="in">ada@example.com</div>
+          <label>Résumé</label><div class="in file got"><span>ada-moreno-cv.pdf</span><span style="font-size:13px;color:oklch(0.5 0.01 60)">Remove</span></div>
+          <div class="slot">
+            <div class="gate">
+              <div class="gate-main">
+                <span class="box"></span>
+                <span class="what"><b>voitProof</b><span>3 skills · about 3 min</span></span>
+                <span class="by"><span class="seal s"><svg><use href="#seal-g"/></svg></span>Voit</span>
+              </div>
+              <div class="claims">
+                <span class="claim"><i></i>SQL</span>
+                <span class="claim"><i></i>TypeScript</span>
+                <span class="claim"><i></i>Linux</span>
+              </div>
+            </div>
+          </div>
+          <div class="submit-row">
+            <span class="submit off">Submit application</span>
+            <span class="submit-why">Finish voitProof to submit.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">04 · Confirm the claims</span>
+        <p>First screen in the window. Each claim says where it was found. Untick one you would rather skip; it then shows as "skipped", never hidden.</p>
+        <p>A role skill the résumé does not claim can be added. Python is shown, unticked.</p>
+        <p>The consent line sits here, once.</p>
+      </div>
+      <div class="stage">
+        <div class="host" aria-hidden="true">
+          <h3>Education platform engineer</h3>
+          <p class="sub">Fernhill Learning · Remote · Full time</p>
+          <label>Full name</label><div class="in">Ada Moreno</div>
+          <label>Email</label><div class="in">ada@example.com</div>
+          <label>Résumé</label><div class="in file got">ada-moreno-cv.pdf</div>
+          <div style="height:230px"></div>
+        </div>
+        <div class="dim">
+          <div class="vc">
+            <div class="vc-top">
+              <span class="vc-brand"><span class="seal"><svg><use href="#seal-g"/></svg></span>voitProof</span>
+              <span class="vc-right"><span class="x">×</span></span>
+            </div>
+            <p class="vc-q" style="margin-top:20px">Your résumé lists these skills. Review them.</p>
+            <div class="confirm">
+              <div class="on"><span class="tick on"><svg><use href="#check"/></svg></span><span>SQL</span><span class="src">Experience, Skills</span></div>
+              <div class="on"><span class="tick on"><svg><use href="#check"/></svg></span><span>TypeScript</span><span class="src">Experience, Skills</span></div>
+              <div class="on"><span class="tick on"><svg><use href="#check"/></svg></span><span>Linux</span><span class="src">Experience, Skills</span></div>
+              <div class="no"><span class="tick"></span><span>Python</span><span class="src">not on your résumé</span></div>
+            </div>
+            <p class="vc-consent">Your answers, without your name, help us calibrate these challenges. <b>How each skill scored, and your one written note, go to Fernhill Learning.</b></p>
+            <div class="vc-foot">
+              <span class="vc-hint">4 calls, 1 note · about 3 min</span>
+              <span class="btn">Start <svg><use href="#arrow"/></svg></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">05 · A call on a claim</span>
+        <p>Each call names the claim it tests, in coral. Calls are spread across the confirmed claims; the note comes last, as before.</p>
+        <p>Same call format as mockup 03: pick one, rank, or write.</p>
+      </div>
+      <div class="stage">
+        <div class="host" aria-hidden="true">
+          <h3>Education platform engineer</h3>
+          <p class="sub">Fernhill Learning · Remote · Full time</p>
+          <div style="height:420px"></div>
+        </div>
+        <div class="dim">
+          <div class="vc">
+            <div class="vc-top">
+              <span class="vc-brand"><span class="seal"><svg><use href="#seal-g"/></svg></span>voitProof</span>
+              <span class="vc-right"><span class="vc-count">02 / 05</span><span class="x">×</span></span>
+            </div>
+            <div class="bar"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+            <div class="vc-area"><span class="claim"><i></i>SQL</span><span class="label">grade-report.sql</span></div>
+<pre class="vc-art"><span class="c">-- Average grade per course, for the term report</span>
+SELECT c.title, AVG(g.score)
+  FROM courses c
+  LEFT JOIN grades g ON g.course_id = c.id
+ WHERE g.term = '2026-autumn'
+ GROUP BY c.title;</pre>
+            <p class="vc-q">Courses with no grades yet are missing from the report. Why?</p>
+            <div class="vc-opts">
+              <div class="vc-opt"><span class="k">A</span><span>AVG skips nulls, so those rows are dropped.</span></div>
+              <div class="vc-opt on"><span class="k">B</span><span>The WHERE on g.term turns the LEFT JOIN into an inner join.</span></div>
+              <div class="vc-opt"><span class="k">C</span><span>GROUP BY needs c.id as well as c.title.</span></div>
+            </div>
+            <div class="vc-foot">
+              <span class="vc-hint">Answers are final.</span>
+              <span class="btn">Lock it in <svg><use href="#arrow"/></svg></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">06 · Back in the form</span>
+        <p>The window closes after a short "Done." The row ticks; each claim turns blue where it passed.</p>
+        <p>A claim that did not hold up gets the yellow ring: a flag, not a rejection. Submit wakes up either way.</p>
+      </div>
+      <div class="stage">
+        <div class="host">
+          <h3>Education platform engineer</h3>
+          <p class="sub">Fernhill Learning · Remote · Full time</p>
+          <label>Full name</label><div class="in">Ada Moreno</div>
+          <label>Email</label><div class="in">ada@example.com</div>
+          <label>Résumé</label><div class="in file got">ada-moreno-cv.pdf</div>
+          <div class="slot">
+            <div class="gate">
+              <div class="gate-main">
+                <span class="box done"><svg><use href="#check"/></svg></span>
+                <span class="what"><b>voitProof</b><span>signed · 3 min 05 s · <u>see your calls</u></span></span>
+                <span class="by"><span class="seal s"><svg><use href="#seal-g"/></svg></span>Voit</span>
+              </div>
+              <div class="claims">
+                <span class="claim got"><i></i>SQL <span class="s">2 of 2</span></span>
+                <span class="claim got"><i></i>TypeScript <span class="s">1 of 1</span></span>
+                <span class="claim miss"><i></i>Linux <span class="s">0 of 1</span></span>
+              </div>
+            </div>
+          </div>
+          <span class="submit">Submit application</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 07 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">07 · What the recruiter sees</span>
+        <p>In <code>/pool</code> and <code>/verify</code>, each applicant's claims beside how they scored. Order still comes from the scored calls only; the flag never moves anyone.</p>
+      </div>
+      <div class="pool">
+        <div class="vc-top">
+          <span class="vc-brand"><span class="seal"><svg><use href="#seal-g"/></svg></span>Ranked pool</span>
+          <span class="label">Education platform engineer</span>
+        </div>
+        <div class="applicant"><span>Ada Moreno</span>
+          <div><div class="claims"><span class="claim got"><i></i>SQL <span class="s">2 of 2</span></span><span class="claim got"><i></i>TypeScript <span class="s">1 of 1</span></span><span class="claim miss"><i></i>Linux <span class="s">0 of 1</span></span></div>
+          <p class="words">"The essay goes straight into the prompt, so a student can tell the model to give them an A."</p></div></div>
+        <div class="applicant"><span>Applicant 05</span>
+          <div><div class="claims"><span class="claim got"><i></i>SQL <span class="s">2 of 2</span></span><span class="claim got"><i></i>Python <span class="s">2 of 2</span></span><span class="claim off"><i></i>TypeScript <span class="s">skipped</span></span></div>
+          <p class="words">"Back up first. The delete is the step you can't take back."</p></div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</body>
+</html>

@@ -1,7 +1,7 @@
 import type { Bank, Item } from "./bank";
 
 // Which items a session serves, in order. Retired items are never drawn.
-// Embed: 3 gold and 1 open decide or rank, drawn at random and shuffled together, then 1 write item last.
+// Embed: 3 gold and 1 open decide or rank, drawn at random and shuffled together. Each carries a Why, so no write item.
 // Practice: every unretired item in the pack, shuffled.
 
 export type Mode = "embed" | "practice";
@@ -16,8 +16,7 @@ export function drawSet(bank: Bank, packId: string, mode: Mode, random: Random =
 
   const of = (keep: (i: Item) => boolean, n: number) => shuffle(live.filter(keep), random).slice(0, n);
   const calls = [...of((i) => i.kind === "gold", 3), ...of((i) => i.kind === "open" && i.format !== "write", 1)];
-  const write = of((i) => i.format === "write", 1);
-  return [...shuffle(calls, random), ...write].map((i) => i.id);
+  return shuffle(calls, random).map((i) => i.id);
 }
 
 /** Fisher-Yates on a copy. */

@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voit Proof · How you work (mockup 07)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Pixelify+Sans&display=swap" rel="stylesheet">
+<style>
+/* Static mockup: pick your strongest skills, then each call records how you work: what you look at first,
+   what you decide, and what decided it. The window is centred, as built. Nothing here is implementation. */
+:root {
+  --display: "Bricolage Grotesque", "Hanken Grotesk", system-ui, sans-serif;
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --pixel: "Pixelify Sans", var(--mono);
+  --ground: oklch(0.975 0.012 85); --ground-2: oklch(0.945 0.022 80);
+  --ink: oklch(0.23 0.015 60); --ink-2: oklch(0.47 0.015 60); --line: oklch(0.88 0.016 80);
+  --proof: oklch(0.50 0.21 265); --proof-tint: oklch(0.92 0.045 265);
+  --you: oklch(0.66 0.19 35); --you-tint: oklch(0.935 0.055 40);
+  --team: oklch(0.58 0.12 180); --team-tint: oklch(0.925 0.05 180);
+  --on-proof: oklch(0.98 0.01 265);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { font: 17px/1.55 var(--sans); -webkit-font-smoothing: antialiased; background: var(--ground); color: var(--ink); }
+section { padding: 88px 24px 104px; }
+.wrap { max-width: 1060px; margin: 0 auto; }
+@media (max-width: 760px) { section { padding: 48px 16px 64px; } }
+.label { font: 500 12px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.headline { font: 600 clamp(34px, 4.6vw, 54px)/1.02 var(--display); letter-spacing: -.03em; margin: 0 0 14px; }
+.body { max-width: 62ch; color: var(--ink-2); margin: 0 0 12px; }
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-bottom: 16px; margin-bottom: 72px; border-bottom: 1px solid var(--line); }
+.mark-sm { display: flex; align-items: center; gap: 10px; font: 600 17px var(--display); }
+.intro { display: grid; grid-template-columns: 240px 1fr; gap: 24px; margin-bottom: 72px; }
+.frame { display: grid; grid-template-columns: 240px 1fr; gap: 24px; padding-top: 24px; border-top: 1px solid var(--line); margin-top: 48px; }
+.notes .label { display: block; color: var(--ink); margin-bottom: 10px; }
+.notes p { margin: 0 0 10px; font-size: 14.5px; color: var(--ink-2); max-width: 30ch; }
+.notes code { font: 400 13px var(--mono); color: var(--ink); }
+@media (max-width: 760px) { .intro, .frame { grid-template-columns: 1fr; gap: 12px; } .notes p { max-width: none; } }
+.seal { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 7px; background: var(--proof); color: var(--on-proof); flex: none; }
+.seal svg { width: 24px; height: 24px; }
+
+/* the dimmed page with the centred window, as built */
+.stage { position: relative; max-width: 640px; min-height: 560px; border-radius: 8px; background: oklch(0.23 0.015 60 / .45); display: grid; place-items: center; padding: 28px 16px; border: 1px solid var(--line); }
+.pop { width: 100%; max-width: 420px; border: 1px solid oklch(0.8 0.016 80); border-radius: 6px; background: var(--ground); font-family: var(--sans); color: var(--ink); }
+.band { margin: 7px 7px 0; padding: 16px 18px 18px; border-radius: 3px; background: var(--proof); color: var(--on-proof); }
+.band .t { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; opacity: .85; display: flex; justify-content: space-between; gap: 8px; }
+.band .q { margin-top: 6px; font: 600 19px/1.22 var(--display); letter-spacing: -.015em; }
+.beats { display: flex; gap: 4px; }
+.beats i { width: 18px; height: 4px; border-radius: 999px; background: oklch(0.98 0.01 265 / .35); }
+.beats i.on { background: var(--on-proof); }
+.pb { padding: 12px 7px 0; }
+.pf { display: flex; align-items: center; gap: 12px; margin-top: 12px; padding: 10px 7px 10px 12px; border-top: 1px solid var(--line); }
+.x { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--ink-2); display: grid; place-items: center; font: 500 15px var(--mono); color: var(--ink-2); }
+.n { font: 400 14px var(--pixel); letter-spacing: .05em; color: var(--ink-2); }
+.go { margin-left: auto; height: 40px; padding: 0 22px; border-radius: 4px; background: var(--proof); color: var(--on-proof); display: inline-flex; align-items: center; font: 600 13px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.go.off { opacity: .4; }
+.hint { margin: 8px 2px 0; font: 400 12px var(--mono); color: var(--ink-2); }
+
+/* skills */
+.skills { display: grid; gap: 6px; }
+.sk { display: grid; grid-template-columns: 22px 1fr auto; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 3px; border: 1.5px solid var(--line); font-size: 15px; }
+.sk .x2 { width: 20px; height: 20px; border-radius: 4px; border: 2px solid var(--ink-2); display: grid; place-items: center; }
+.sk small { font: 400 12px var(--mono); color: var(--ink-2); }
+.sk.on { border-color: var(--proof); background: var(--proof-tint); }
+.sk.on .x2 { background: var(--proof); border-color: var(--proof); color: var(--on-proof); }
+.sk .x2 svg { width: 12px; height: 12px; }
+
+/* the work, with tappable lines */
+.code { margin: 0; background: var(--ground-2); border-radius: 3px; padding: 8px 0; font: 400 12.5px/1.6 var(--mono); overflow-x: auto; }
+.ln { display: grid; grid-template-columns: 30px 1fr 26px; align-items: center; padding: 1px 10px 1px 0; white-space: pre; }
+.ln .no { color: var(--ink-2); text-align: right; padding-right: 10px; opacity: .7; }
+.ln .c { color: var(--ink-2); }
+.ln.tap { background: var(--you-tint); box-shadow: inset 3px 0 0 var(--you); }
+.ln .ord { justify-self: end; width: 20px; height: 20px; border-radius: 50%; background: var(--you); color: oklch(0.99 0.01 40); display: grid; place-items: center; font: 600 11px var(--mono); }
+
+/* options and reasons */
+.opts { display: grid; gap: 6px; }
+.opt { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; padding: 9px 12px; border-radius: 3px; border: 1.5px solid var(--line); font-size: 14.5px; line-height: 1.4; }
+.opt .k { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 4px; border: 1px solid var(--line); font: 500 11.5px var(--mono); color: var(--ink-2); }
+.opt.on { border-color: var(--proof); background: var(--proof-tint); }
+.opt.on .k { background: var(--proof); border-color: var(--proof); color: var(--on-proof); }
+.recap { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; font: 400 12px var(--mono); color: var(--ink-2); }
+.recap span { padding: 3px 8px; border-radius: 999px; background: var(--ground-2); }
+.own { margin-top: 6px; padding: 9px 12px; border-radius: 3px; border: 1.5px dashed var(--line); font-size: 14.5px; color: var(--ink-2); }
+
+/* the record */
+.rec { max-width: 640px; border-radius: 24px; background: var(--ground-2); padding: 24px; }
+.rec h4 { margin: 0 0 4px; font: 600 20px var(--display); letter-spacing: -.01em; }
+.rec .sub { margin: 0 0 16px; font-size: 14.5px; color: var(--ink-2); }
+.call { display: grid; grid-template-columns: 120px 1fr; gap: 6px 16px; padding: 14px 0; border-top: 1px solid var(--line); font-size: 14.5px; }
+.call:last-of-type { border-bottom: 1px solid var(--line); }
+.call .k2 { font: 500 11.5px/1.9 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.call .m { font: 400 13.5px var(--mono); }
+.chip { display: inline-block; padding: 2px 8px; border-radius: 999px; font: 500 12px var(--mono); }
+.chip.you { background: var(--you-tint); }
+.chip.ok { background: var(--proof-tint); color: var(--proof); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="seal-g" viewBox="0 0 24 24"><g fill="currentColor"><rect x="5" y="6" width="14" height="2"/><rect x="5" y="10" width="14" height="2"/><rect x="5" y="16" width="14" height="2"/><rect x="5" y="13" width="9" height="2" style="fill:var(--you)"/></g></symbol>
+  <symbol id="check" viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</defs></svg>
+
+<section>
+  <div class="wrap">
+    <div class="topbar">
+      <span class="mark-sm"><span class="seal"><svg><use href="#seal-g"/></svg></span>Voit Proof</span>
+      <span class="label">Mockup 07 · How you work · 6 Oct 2026</span>
+    </div>
+
+    <div class="intro">
+      <span class="label" style="padding-top:6px">For review</span>
+      <div>
+        <h1 class="headline">Not just the answer. How you got there.</h1>
+        <p class="body">Inside the voitProof window, as built (centred). The candidate first picks the skills they are strongest in. Then each call is three quick taps: <b>Spot</b> (tap the lines you would check first), <b>Call</b> (what you do), <b>Why</b> (what decided it). The answer is one data point; the order you looked in and the reason you gave are the workflow, which is the part worth collecting.</p>
+        <p class="body">Three calls of three taps keeps it near three minutes, so the separate written note goes: the Why step is the written part, and it is shorter.</p>
+      </div>
+    </div>
+
+    <!-- 01 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">01 · Your strengths</span>
+        <p>First screen after clicking the box. The role's skills, in plain words. Pick up to two.</p>
+        <p>The calls are drawn from what you picked, so strong people are tested where they are strong, and the record says what they claimed.</p>
+        <p>Consent sits here, once.</p>
+      </div>
+      <div class="stage">
+        <div class="pop">
+          <div class="band"><div class="t"><span>Fernhill Learning</span></div><p class="q">Which are you strongest in?</p></div>
+          <div class="pb">
+            <div class="skills">
+              <div class="sk on"><span class="x2"><svg><use href="#check"/></svg></span><span>Data and SQL</span><small></small></div>
+              <div class="sk"><span class="x2"></span><span>Access and permissions</span><small></small></div>
+              <div class="sk on"><span class="x2"><svg><use href="#check"/></svg></span><span>Reviewing AI-written code</span><small></small></div>
+              <div class="sk"><span class="x2"></span><span>Servers and deploys</span><small></small></div>
+            </div>
+            <p class="hint">Pick up to 2. Answers help calibrate these checks, without your name; how you worked goes to Fernhill Learning.</p>
+          </div>
+          <div class="pf"><span class="x">×</span><span class="n">3 calls · 3 min</span><span class="go">Start</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">02 · Spot</span>
+        <p>Tap the lines you would check first, in order. Each tap gets a coral number. One tap is enough; three at most.</p>
+        <p>Recorded: which lines, in what order, and how long before the first tap. That is where the person looks, which a picked answer never shows.</p>
+        <p>The three bars in the band are the call's three taps.</p>
+      </div>
+      <div class="stage">
+        <div class="pop">
+          <div class="band"><div class="t"><span>Data and SQL · gradebook.ts</span><span class="beats"><i class="on"></i><i></i><i></i></span></div><p class="q">The assistant says this is ready to merge. Tap the lines you would check first.</p></div>
+          <div class="pb">
+<div class="code"><div class="ln"><span class="no">1</span><span class="c">// Fetch grades for the teacher's gradebook</span><span></span></div><div class="ln tap"><span class="no">2</span><span>export async function getGrades(teacherId, courseId) {</span><span class="ord">2</span></div><div class="ln"><span class="no">3</span><span>  return db.grade.findMany({</span><span></span></div><div class="ln tap"><span class="no">4</span><span>    where: { courseId },</span><span class="ord">1</span></div><div class="ln"><span class="no">5</span><span>    include: { student: true },</span><span></span></div><div class="ln"><span class="no">6</span><span>  });</span><span></span></div><div class="ln"><span class="no">7</span><span>}</span><span></span></div></div>
+            <p class="hint">Tap up to 3 lines, in the order you would check them.</p>
+          </div>
+          <div class="pf"><span class="x">×</span><span class="n">1 / 3</span><span class="go">Next</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">03 · Call</span>
+        <p>Same work, now the decision. The lines you tapped stay marked, so the call follows from where you looked.</p>
+        <p>Pick-one or put-in-order, as today.</p>
+      </div>
+      <div class="stage">
+        <div class="pop">
+          <div class="band"><div class="t"><span>Data and SQL · gradebook.ts</span><span class="beats"><i class="on"></i><i class="on"></i><i></i></span></div><p class="q">What do you do?</p></div>
+          <div class="pb">
+            <div class="recap"><span>You checked line 4, then line 2</span></div>
+            <div class="opts">
+              <div class="opt"><span class="k">A</span><span>Merge it. The course id already scopes the grades.</span></div>
+              <div class="opt on"><span class="k">B</span><span>Send it back. Nothing checks that this teacher teaches the course.</span></div>
+              <div class="opt"><span class="k">C</span><span>Send it back. It needs pagination first.</span></div>
+              <div class="opt"><span class="k">D</span><span>Merge it, then add an index on courseId.</span></div>
+            </div>
+          </div>
+          <div class="pf"><span class="x">×</span><span class="n">1 / 3</span><span class="go">Next</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">04 · Why</span>
+        <p>One tap on what decided it, or a few words of your own (80 characters, typed, paste off).</p>
+        <p>The reasons are written so that each one is a different line of thinking, not one right and three wrong. Two people with the same answer and different reasons are different hires.</p>
+      </div>
+      <div class="stage">
+        <div class="pop">
+          <div class="band"><div class="t"><span>Data and SQL · gradebook.ts</span><span class="beats"><i class="on"></i><i class="on"></i><i class="on"></i></span></div><p class="q">What decided it?</p></div>
+          <div class="pb">
+            <div class="recap"><span>Lines 4, 2</span><span>B · send it back</span></div>
+            <div class="opts">
+              <div class="opt on"><span class="k">1</span><span>teacherId comes in and is never used.</span></div>
+              <div class="opt"><span class="k">2</span><span>The query trusts whatever course id the browser sends.</span></div>
+              <div class="opt"><span class="k">3</span><span>Grades are student records; access rules apply before anything else.</span></div>
+            </div>
+            <div class="own">Or in your own words…</div>
+          </div>
+          <div class="pf"><span class="x">×</span><span class="n">1 / 3</span><span class="go">Next</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">05 · What gets collected</span>
+        <p>Per call: skill, lines in order with timing, the call, the reason. Stored per answer as today, and signed into the result.</p>
+        <p>The employer reads it in <code>/verify</code> and <code>/pool</code> as a short trace. The score still comes only from the call, so ordering stays deterministic; Spot and Why are the data.</p>
+      </div>
+      <div class="rec">
+        <h4>How Applicant 07 worked</h4>
+        <p class="sub">Picked: Data and SQL, Reviewing AI-written code · 3 calls · 2 min 48 s</p>
+        <div class="call">
+          <span class="k2">gradebook.ts</span>
+          <div><span class="chip you">line 4 → line 2 · first tap 6 s</span> &nbsp;<span class="chip ok">B · right</span><br><span style="color:var(--ink-2)">"teacherId comes in and is never used."</span></div>
+        </div>
+        <div class="call">
+          <span class="k2">grade-report.sql</span>
+          <div><span class="chip you">line 5 · first tap 11 s</span> &nbsp;<span class="chip ok">B · right</span><br><span style="color:var(--ink-2)">In their words: "the WHERE on g.term kills the left join"</span></div>
+        </div>
+        <div class="call">
+          <span class="k2">big-ai-pr</span>
+          <div><span class="chip you">line 12 → line 3 → line 30 · first tap 19 s</span> &nbsp;<span class="chip" style="background:var(--ground)">unscored</span><br><span style="color:var(--ink-2)">"Too big to review; split by feature first."</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</body>
+</html>

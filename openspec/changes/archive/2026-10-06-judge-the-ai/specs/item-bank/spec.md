@@ -41,7 +41,7 @@ The system SHALL strip `answer`, `reason`, `rubric` and `kind` from any item bef
 - **THEN** the response contains no answer, reason, rubric or kind field
 
 ### Requirement: Packs list items for a role
-A pack SHALL be a named list of item ids. Every id in a pack SHALL exist in the bank. A pack SHALL hold at least 3 gold items, at least 1 open decide or rank item, and at least 1 write item, so an embed set can always be drawn.
+A pack SHALL be a named list of item ids, with the employer it is for (named in the consent line). Every id in a pack SHALL exist in the bank. A pack SHALL hold at least 3 gold items, at least 1 open decide or rank item, and at least 1 write item, so an embed set can always be drawn.
 
 #### Scenario: Pack with missing item is rejected
 - **WHEN** a pack lists an id with no item file

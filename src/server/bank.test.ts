@@ -17,7 +17,7 @@ const open = { id: "o1", kind: "open", area: "tenancy", format: "decide", artifa
 
 // the smallest pack an embed set can be drawn from: 3 gold, 1 open decide or rank, 1 write
 const minimal = [decide({ id: "g1" }), decide({ id: "g2" }), rank({ id: "g3" }), open, write()];
-const pack = (items: string[]) => ({ id: "p", name: "P", items });
+const pack = (items: string[]) => ({ id: "p", name: "P", employer: "E", items });
 
 describe("items", () => {
   test("valid items load", () => {
@@ -43,6 +43,12 @@ describe("items", () => {
     ["open decide with reason", { ...open, reason: "r" }],
     ["empty question", write({ question: "" })],
     ["retired that is not a flag", decide({ retired: "yes" })],
+    // tweet-sized: it must fit the window without scrolling
+    ["work over 6 lines", decide({ artifact: { ...artifact, body: ["a", "b", "c", "d", "e", "f", "g"].join("\n") } })],
+    ["work over 240 characters", decide({ artifact: { kind: "text", label: "x", body: "word ".repeat(49) } })],
+    ["a code line over 60 characters", decide({ artifact: { ...artifact, body: "x".repeat(61) } })],
+    ["a question over 100 characters", decide({ question: "q".repeat(101) })],
+    ["an option over 64 characters", decide({ options: ["a", "o".repeat(65), "c"] })],
   ])("rejects %s, naming the item", (_name, item) => {
     expect(() => buildBank([item], [])).toThrow(/d1|r1|w1|o1/);
   });
@@ -53,6 +59,10 @@ describe("items", () => {
 
   test("duplicate ids are rejected", () => {
     expect(() => buildBank([decide(), decide()], [])).toThrow(/d1/);
+  });
+
+  test("prose may run past 60 characters a line, since it wraps as text", () => {
+    expect(() => buildBank([decide({ artifact: { kind: "text", label: "x", body: "w ".repeat(60) } })], [])).not.toThrow();
   });
 
   test("a retired item still loads", () => {

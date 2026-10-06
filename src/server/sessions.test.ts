@@ -37,21 +37,29 @@ async function start(mode: "embed" | "practice" = "embed") {
   return r.body;
 }
 
-async function answer(sessionId: string, itemId: string, value: unknown = answerFor(item(itemId)), signals?: object) {
-  return submitAnswer(deps, sessionId, { itemId, answer: value, signals });
+/** "What decided it?" in a candidate's words; nothing on write items. */
+function whyFor(i: Item): string | undefined {
+  return i.format === "write" ? undefined : `why ${i.id}`;
+}
+
+async function answer(sessionId: string, itemId: string, value: unknown = answerFor(item(itemId)), signals?: object, why: unknown = whyFor(item(itemId))) {
+  return submitAnswer(deps, sessionId, { itemId, answer: value, why, signals });
 }
 
 describe("POST /api/sessions", () => {
-  test("embed: returns the session and the first of 5 items, stripped", async () => {
+  test("embed: returns the session and the first of 4 calls, stripped", async () => {
     const s = await start("embed");
-    expect(s.total).toBe(5);
+    expect(s.total).toBe(4);
     expect(s.position).toBe(1);
+    // the player names the role and the employer in the consent line
+    expect(s.role).toBe("Education platform engineer");
+    expect(s.employer).toBe("Fernhill Learning");
     expect(s.item).not.toHaveProperty("answer");
     expect(s.item).not.toHaveProperty("kind");
     expect(s.item).not.toHaveProperty("reason");
     const session = (await store.getSession(s.sessionId))!;
     expect(session.itemIds[0]).toBe(s.item.id);
-    expect(item(session.itemIds[4]).format).toBe("write");
+    expect(session.itemIds.map(item).some((i) => i.format === "write")).toBe(false);
   });
 
   test("practice: every item in the pack", async () => {
@@ -62,7 +70,7 @@ describe("POST /api/sessions", () => {
   test("mode defaults to embed", async () => {
     const r = await startSession(deps, { pack: PACK });
     expect(r.status).toBe(201);
-    expect("total" in r.body && r.body.total).toBe(5);
+    expect("total" in r.body && r.body.total).toBe(4);
   });
 
   test("unknown pack is not found and creates no session", async () => {
@@ -94,7 +102,7 @@ describe("POST /api/sessions/:id/answers", () => {
     const s = await start();
     const r = await answer(s.sessionId, s.item.id);
     expect(r.status).toBe(200);
-    expect(r.body).toMatchObject({ done: false, position: 2, total: 5 });
+    expect(r.body).toMatchObject({ done: false, position: 2, total: 4 });
     expect(await store.answers(s.sessionId)).toHaveLength(1);
   });
 
@@ -131,6 +139,19 @@ describe("POST /api/sessions/:id/answers", () => {
     expect((await answer(s.sessionId, i.id, bad)).status).toBe(400);
   });
 
+  test("a call needs a valid Why, and the Why is stored with the answer", async () => {
+    const s = await start();
+    const i = item(s.item.id);
+    expect((await submitAnswer(deps, s.sessionId, { itemId: i.id, answer: answerFor(i) })).status).toBe(400);
+    for (const bad of [null, 0, "", "   ", "x".repeat(81)]) {
+      expect((await answer(s.sessionId, i.id, undefined, undefined, bad)).status).toBe(400);
+    }
+    expect(await store.answers(s.sessionId)).toHaveLength(0);
+    expect((await answer(s.sessionId, i.id, undefined, undefined, "teacherId is never used")).status).toBe(200);
+    const [row] = await store.answers(s.sessionId);
+    expect(row.why).toBe("teacherId is never used");
+  });
+
   test("unknown session is not found", async () => {
     expect((await submitAnswer(deps, "00000000-0000-4000-8000-000000000000", { itemId: "x", answer: 0 })).status).toBe(404);
   });
@@ -138,7 +159,7 @@ describe("POST /api/sessions/:id/answers", () => {
   test("timing comes from the server clock, whatever the browser says", async () => {
     const s = await start();
     tick(42);
-    await submitAnswer(deps, s.sessionId, { itemId: s.item.id, answer: answerFor(item(s.item.id)), answeredAt: "1999-01-01", servedAt: "1999-01-01" });
+    await submitAnswer(deps, s.sessionId, { itemId: s.item.id, answer: answerFor(item(s.item.id)), why: whyFor(item(s.item.id)), answeredAt: "1999-01-01", servedAt: "1999-01-01" });
     const [row] = await store.answers(s.sessionId);
     expect(row.servedAt).toEqual(new Date(Date.parse("2026-10-05T12:00:00Z")));
     expect(row.answeredAt.getTime() - row.servedAt.getTime()).toBe(42_000);
@@ -201,7 +222,7 @@ describe("finishing", () => {
     let last;
     for (const [n, id] of ids.entries()) {
       tick(30);
-      last = await answer(s.sessionId, id, undefined, n === 4 ? { pasteAttempts: 1 } : { timeAwaySeconds: 5 });
+      last = await answer(s.sessionId, id, undefined, n === 3 ? { pasteAttempts: 1 } : { timeAwaySeconds: 5 });
     }
     expect(last!.body).toMatchObject({ done: true });
     const body = last!.body as { profile: object; token: string };
@@ -220,9 +241,10 @@ describe("finishing", () => {
         mode: "embed",
         items: ids,
         profile: body.profile,
-        written: "Port 22 is never allowed, so SSH is refused.",
-        totalSeconds: 150,
-        flags: { timeAwaySeconds: 20, pasteAttempts: 1, bulkInputs: 0 },
+        reasoning: ids.map((id) => `why ${id}`),
+        written: null,
+        totalSeconds: 120,
+        flags: { timeAwaySeconds: 15, pasteAttempts: 1, bulkInputs: 0 },
       });
     }
   });
@@ -231,7 +253,18 @@ describe("finishing", () => {
     const s = await start("embed");
     const ids = (await store.getSession(s.sessionId))!.itemIds;
     for (const id of ids) await answer(s.sessionId, id);
-    expect((await answer(s.sessionId, ids[4])).status).toBe(409);
+    expect((await answer(s.sessionId, ids[3])).status).toBe(409);
+  });
+
+  test("reasoning is each call's Why as typed, in order; the profile does not change", async () => {
+    const s = await start("embed");
+    const ids = (await store.getSession(s.sessionId))!.itemIds;
+    let last;
+    for (const [n, id] of ids.entries()) last = await answer(s.sessionId, id, undefined, undefined, `  reason ${n}  `);
+    const v = await verifyResult((last!.body as { token: string }).token, toPublicJwk(key));
+    if (!v.genuine) throw new Error("not genuine");
+    expect(v.payload.reasoning).toEqual(["reason 0", "reason 1", "reason 2", "reason 3"]);
+    expect(Object.values(v.payload.profile).reduce((a, p) => a + (p?.of ?? 0), 0)).toBe(3);
   });
 });
 

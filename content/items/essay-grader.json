@@ -6,7 +6,7 @@
   "artifact": {
     "kind": "code",
     "label": "AI suggestion · grade-essay.ts",
-    "body": "const prompt = `You are a strict grader. Grade this essay from A to F.\nReply with the letter only.\n\nEssay:\n${essay.text}`;\n\nconst letter = await llm.complete(prompt);\nawait db.grade.update({ where: { id: essay.gradeId }, data: { letter } });"
+    "body": "const prompt = `Grade this essay A to F. Reply with\nthe letter only. Essay: ${essay.text}`;\nconst letter = await llm.complete(prompt);\nawait db.grade.update(essay.gradeId, { letter });"
   },
   "question": "This ships next week. What is the biggest problem?",
   "reason": "Student text is treated as instructions and the reply becomes a grade unchecked, so a student can grade themselves."

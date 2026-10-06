@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voit Proof · The widget (mockup 06)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Pixelify+Sans&display=swap" rel="stylesheet">
+<style>
+/* Static mockup: Voit renders exactly like a captcha. A fixed 304 x 78 box, a checkbox, the mark.
+   The challenge opens as a window anchored to the box, captcha style. Flow and content as mockup 05. Nothing here is implementation. */
+:root {
+  --display: "Bricolage Grotesque", "Hanken Grotesk", system-ui, sans-serif;
+  --sans: "Hanken Grotesk", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --pixel: "Pixelify Sans", var(--mono);
+  --ground: oklch(0.975 0.012 85); --ground-2: oklch(0.945 0.022 80);
+  --ink: oklch(0.23 0.015 60); --ink-2: oklch(0.47 0.015 60); --line: oklch(0.88 0.016 80);
+  --proof: oklch(0.50 0.21 265); --proof-tint: oklch(0.92 0.045 265);
+  --you: oklch(0.66 0.19 35); --you-tint: oklch(0.935 0.055 40);
+  --on-proof: oklch(0.98 0.01 265);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { font: 17px/1.55 var(--sans); -webkit-font-smoothing: antialiased; background: var(--ground); color: var(--ink); }
+section { padding: 88px 24px 104px; }
+.wrap { max-width: 1060px; margin: 0 auto; }
+@media (max-width: 760px) { section { padding: 48px 16px 64px; } }
+.label { font: 500 12px/1.4 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+.headline { font: 600 clamp(34px, 4.6vw, 54px)/1.02 var(--display); letter-spacing: -.03em; margin: 0 0 14px; }
+.body { max-width: 60ch; color: var(--ink-2); margin: 0; }
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-bottom: 16px; margin-bottom: 72px; border-bottom: 1px solid var(--line); }
+.mark-sm { display: flex; align-items: center; gap: 10px; font: 600 17px var(--display); }
+.intro { display: grid; grid-template-columns: 240px 1fr; gap: 24px; margin-bottom: 72px; }
+.frame { display: grid; grid-template-columns: 240px 1fr; gap: 24px; padding-top: 24px; border-top: 1px solid var(--line); margin-top: 48px; }
+.notes .label { display: block; color: var(--ink); margin-bottom: 10px; }
+.notes p { margin: 0 0 10px; font-size: 14.5px; color: var(--ink-2); max-width: 30ch; }
+.notes code { font: 400 13px var(--mono); color: var(--ink); }
+@media (max-width: 760px) { .intro, .frame { grid-template-columns: 1fr; gap: 12px; } .notes p { max-width: none; } }
+.seal { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 9px; background: var(--proof); color: var(--on-proof); flex: none; }
+.seal svg { width: 22px; height: 22px; }
+
+/* ---------- the widget: 304 x 78, like every captcha ---------- */
+.w { width: 304px; height: 78px; display: flex; align-items: center; gap: 12px; padding: 0 12px 0 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--ground-2); font-family: var(--sans); color: var(--ink); flex: none; }
+.cb { width: 28px; height: 28px; border-radius: 4px; border: 2px solid oklch(0.62 0.012 60); background: var(--ground); flex: none; display: grid; place-items: center; }
+.cb.done { border-color: var(--proof); background: var(--proof); color: var(--on-proof); }
+.cb.done svg { width: 18px; height: 18px; }
+.cb.spin { border: 3px solid var(--proof-tint); border-top-color: var(--proof); border-radius: 50%; }
+.w .say { flex: 1; font-size: 14px; color: var(--ink-2); }
+.w .mark { display: grid; justify-items: center; gap: 2px; }
+.w .mark b { font: 600 11px var(--display); letter-spacing: .02em; color: var(--ink); }
+.w .mark small { font: 400 8px var(--mono); color: var(--ink-2); letter-spacing: .02em; }
+.states { display: flex; flex-wrap: wrap; gap: 20px 28px; }
+.states figure { margin: 0; display: grid; gap: 8px; }
+.states figcaption { font: 400 12.5px var(--mono); color: var(--ink-2); }
+
+/* ---------- the employer's page ---------- */
+.stage { position: relative; max-width: 640px; }
+.host { border: 1px solid var(--line); border-radius: 8px; background: oklch(0.99 0.004 85); padding: 28px; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: oklch(0.25 0.01 60); }
+.host h3 { margin: 0; font-size: 20px; font-weight: 700; }
+.host .sub { margin: 4px 0 20px; font-size: 14px; color: oklch(0.5 0.01 60); }
+.host label { display: block; font-size: 13px; font-weight: 600; margin: 14px 0 6px; }
+.host .in { height: 38px; border: 1px solid oklch(0.85 0.01 60); border-radius: 8px; background: oklch(0.995 0.002 85); padding: 0 12px; display: flex; align-items: center; font-size: 14px; color: oklch(0.3 0.01 60); }
+.host .slot { margin: 22px 0 18px; }
+.submit { display: inline-flex; align-items: center; height: 40px; padding: 0 18px; border-radius: 8px; background: oklch(0.32 0.03 250); color: oklch(0.98 0.005 250); font-size: 14px; font-weight: 600; }
+.submit.off { background: oklch(0.9 0.008 250); color: oklch(0.6 0.01 250); }
+.veil { position: absolute; inset: 0; border-radius: 8px; background: oklch(0.99 0.004 85 / .6); }
+
+/* ---------- the challenge window, anchored to the box ---------- */
+.pop { position: absolute; left: 352px; top: 150px; width: 400px; border: 1px solid oklch(0.8 0.016 80); border-radius: 6px; background: var(--ground); font-family: var(--sans); color: var(--ink); }
+.pop::before { content: ""; position: absolute; left: -9px; top: 40px; width: 16px; height: 16px; background: var(--proof); border-left: 1px solid oklch(0.8 0.016 80); border-bottom: 1px solid oklch(0.8 0.016 80); transform: rotate(45deg); }
+@media (max-width: 1000px) { .pop { position: relative; left: auto; top: auto; margin: -40px auto 0; } .pop::before { display: none; } }
+.pop-h { position: relative; margin: 7px 7px 0; padding: 16px 18px 18px; border-radius: 3px; background: var(--proof); color: var(--on-proof); }
+.pop-h .t { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; opacity: .85; display: flex; align-items: center; gap: 8px; }
+.pop-h .t i { width: 8px; height: 8px; border-radius: 50%; background: var(--you); }
+.pop-h .q { margin-top: 6px; font: 600 20px/1.2 var(--display); letter-spacing: -.015em; }
+.pop-b { padding: 12px 7px 0; }
+.art { margin: 0; background: var(--ground-2); border-radius: 3px; padding: 12px 14px; font: 400 12.5px/1.6 var(--mono); white-space: pre; overflow-x: auto; }
+.art .c { color: var(--ink-2); }
+.opts { display: grid; gap: 6px; margin-top: 8px; }
+.opt { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; padding: 9px 12px; border-radius: 3px; border: 1.5px solid var(--line); font-size: 14.5px; line-height: 1.4; }
+.opt .k { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 4px; border: 1px solid var(--line); font: 500 11.5px var(--mono); color: var(--ink-2); }
+.opt.on { border-color: var(--proof); background: var(--proof-tint); }
+.opt.on .k { background: var(--proof); border-color: var(--proof); color: var(--on-proof); }
+.ticks { display: grid; gap: 6px; }
+.tk { display: grid; grid-template-columns: 22px 1fr auto; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 3px; border: 1.5px solid var(--line); font-size: 15px; }
+.tk.on { border-color: var(--proof); }
+.tk .x { width: 20px; height: 20px; border-radius: 4px; border: 2px solid var(--ink-2); display: grid; place-items: center; }
+.tk.on .x { background: var(--proof); border-color: var(--proof); color: var(--on-proof); }
+.tk .x svg { width: 12px; height: 12px; }
+.tk small { font: 400 12px var(--mono); color: var(--ink-2); }
+.tk.no { color: var(--ink-2); border-style: dashed; }
+.note { margin: 8px 0 0; font-size: 12.5px; line-height: 1.45; color: var(--ink-2); padding: 0 4px; }
+.box { min-height: 104px; padding: 10px 12px; border-radius: 3px; border: 1.5px solid var(--proof); font-size: 15px; line-height: 1.5; }
+.under { display: flex; justify-content: space-between; margin-top: 6px; padding: 0 2px; font: 400 12px var(--mono); color: var(--ink-2); }
+.pop-f { display: flex; align-items: center; gap: 12px; margin-top: 12px; padding: 10px 7px 10px 12px; border-top: 1px solid var(--line); }
+.pop-f .ic { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--ink-2); display: grid; place-items: center; font: 600 12px var(--mono); color: var(--ink-2); }
+.pop-f .n { font: 400 14px var(--pixel); letter-spacing: .05em; color: var(--ink-2); }
+.pop-f .go { margin-left: auto; height: 40px; padding: 0 22px; border-radius: 4px; background: var(--proof); color: var(--on-proof); display: inline-flex; align-items: center; font: 600 13px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="seal-g" viewBox="0 0 24 24"><g fill="currentColor"><rect x="5" y="6" width="14" height="2"/><rect x="5" y="10" width="14" height="2"/><rect x="5" y="16" width="14" height="2"/><rect x="5" y="13" width="9" height="2" style="fill:var(--you)"/></g></symbol>
+    <symbol id="check" viewBox="0 0 16 16"><polyline points="3,8.5 6.5,12 13,4.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<section>
+  <div class="wrap">
+    <div class="topbar">
+      <span class="mark-sm"><span class="seal" style="width:24px;height:24px;border-radius:7px"><svg width="24" height="24" style="width:24px;height:24px"><use href="#seal-g"/></svg></span>Voit Proof</span>
+      <span class="label">Mockup 06 · The widget · 6 Oct 2026</span>
+    </div>
+
+    <div class="intro">
+      <span class="label" style="padding-top:6px">For review</span>
+      <div>
+        <h1 class="headline">It renders like a captcha.</h1>
+        <p class="body">Same size, same parts, same behaviour as the box everyone already knows: a checkbox on the left, the mark on the right, no slogan. Click it, a small window opens beside it with a coloured band, the task and one button. The flow inside is mockup 05: confirm the résumé's claims, a few calls on them, one note.</p>
+      </div>
+    </div>
+
+    <!-- 01 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">01 · The box, real size</span>
+        <p>304 by 78, like reCAPTCHA and Turnstile, so it fits wherever those fit.</p>
+        <p>Left: the checkbox. Right: the seal and "Voit", with the small privacy and terms links every captcha carries.</p>
+        <p>Second row: the same box with no text at all beside the checkbox, if you want it even quieter.</p>
+      </div>
+      <div class="states">
+        <figure>
+          <div class="w"><span class="cb"></span><span class="say"></span><span class="mark"><span class="seal"><svg><use href="#seal-g"/></svg></span><b>voit<span style="color:var(--proof)">Proof</span></b><small>Privacy · Terms</small></span></div>
+          <figcaption>Waiting</figcaption>
+        </figure>
+        <figure>
+          <div class="w"><span class="cb spin"></span><span class="say"></span><span class="mark"><span class="seal"><svg><use href="#seal-g"/></svg></span><b>voit<span style="color:var(--proof)">Proof</span></b><small>Privacy · Terms</small></span></div>
+          <figcaption>Reading the résumé</figcaption>
+        </figure>
+        <figure>
+          <div class="w"><span class="cb done"><svg><use href="#check"/></svg></span><span class="say"></span><span class="mark"><span class="seal"><svg><use href="#seal-g"/></svg></span><b>voit<span style="color:var(--proof)">Proof</span></b><small>Privacy · Terms</small></span></div>
+          <figcaption>Done, result attached</figcaption>
+        </figure>
+        <figure>
+          <div class="w"><span class="cb"></span><span class="say">About 3 min</span><span class="mark"><span class="seal"><svg><use href="#seal-g"/></svg></span><b>voit<span style="color:var(--proof)">Proof</span></b><small>Privacy · Terms</small></span></div>
+          <figcaption>Optional: the one hint beside the box</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- 01b -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">01b · The name under the seal</span>
+        <p>Captchas name the check, not the company: reCAPTCHA, hCaptcha, Turnstile. Three options.</p>
+        <p>voitProof keeps the wordmark's colours (voit in ink, Proof in blue) in one captcha-style word.</p>
+      </div>
+      <div class="states">
+        <figure>
+          <div class="w"><span class="cb"></span><span class="say"></span><span class="mark"><span class="seal"><svg><use href="#seal-g"/></svg></span><b>Voit</b><small>Privacy · Terms</small></span></div>
+          <figcaption>Voit</figcaption>
+        </figure>
+        <figure>
+          <div class="w"><span class="cb"></span><span class="say"></span><span class="mark"><span class="seal"><svg><use href="#seal-g"/></svg></span><b>voit<span style="color:var(--proof)">Proof</span></b><small>Privacy · Terms</small></span></div>
+          <figcaption>voitProof · chosen 6 Oct 2026</figcaption>
+        </figure>
+        <figure>
+          <div class="w"><span class="cb"></span><span class="say"></span><span class="mark"><span class="seal"><svg><use href="#seal-g"/></svg></span><b>v<span style="color:var(--proof)">Proof</span></b><small>Privacy · Terms</small></span></div>
+          <figcaption>vProof</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">02 · In the form</span>
+        <p>Sits where a captcha sits, just above the submit button. Submit stays grey until the box is ticked.</p>
+        <p>Clicked before a résumé is attached, the window says only "Attach your résumé first."</p>
+      </div>
+      <div class="stage">
+        <div class="host">
+          <h3>Education platform engineer</h3>
+          <p class="sub">Fernhill Learning · Remote · Full time</p>
+          <label>Full name</label><div class="in">Ada Moreno</div>
+          <label>Email</label><div class="in">ada@example.com</div>
+          <label>Résumé</label><div class="in">ada-moreno-cv.pdf</div>
+          <div class="slot"><div class="w"><span class="cb"></span><span class="say"></span><span class="mark"><span class="seal"><svg><use href="#seal-g"/></svg></span><b>voit<span style="color:var(--proof)">Proof</span></b><small>Privacy · Terms</small></span></div></div>
+          <span class="submit off">Submit application</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">03 · Window, first screen</span>
+        <p>Opens beside the box, pointing at it. The page behind fades slightly; no dark modal.</p>
+        <p>The band says what to do, like "Select all images with traffic lights". Here: confirm what the résumé claims.</p>
+        <p>The consent line sits small under the list, once.</p>
+      </div>
+      <div class="stage" style="min-height:560px">
+        <div class="host">
+          <h3>Education platform engineer</h3>
+          <p class="sub">Fernhill Learning · Remote · Full time</p>
+          <label>Full name</label><div class="in">Ada Moreno</div>
+          <label>Email</label><div class="in">ada@example.com</div>
+          <label>Résumé</label><div class="in">ada-moreno-cv.pdf</div>
+          <div class="slot"><div class="w"><span class="cb spin"></span><span class="say"></span><span class="mark"><span class="seal"><svg><use href="#seal-g"/></svg></span><b>voit<span style="color:var(--proof)">Proof</span></b><small>Privacy · Terms</small></span></div></div>
+          <span class="submit off">Submit application</span>
+        </div>
+        <div class="veil"></div>
+        <div class="pop">
+          <div class="pop-h"><div class="t">From your résumé</div><div class="q">Review the skills on your résumé.</div></div>
+          <div class="pop-b">
+            <div class="ticks">
+              <div class="tk on"><span class="x"><svg><use href="#check"/></svg></span><span>SQL</span><small>Experience, Skills</small></div>
+              <div class="tk on"><span class="x"><svg><use href="#check"/></svg></span><span>TypeScript</span><small>Experience, Skills</small></div>
+              <div class="tk on"><span class="x"><svg><use href="#check"/></svg></span><span>Linux</span><small>Experience, Skills</small></div>
+              <div class="tk no"><span class="x"></span><span>Python</span><small>not on your résumé</small></div>
+            </div>
+            <p class="note">Answers help calibrate these checks, without your name. How each skill scored and your one note go to Fernhill Learning.</p>
+          </div>
+          <div class="pop-f"><span class="ic">i</span><span class="n">4 calls · 1 note</span><span class="go">Start</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">04 · A call</span>
+        <p>The band names the claim (coral dot) and asks the question. The work sits under it, then the options.</p>
+        <p>The window keeps its size from call to call; only the inside changes, the way a captcha reloads its tiles.</p>
+        <p>One button, bottom right, as in every captcha: <code>Next</code>, and <code>Done</code> on the last.</p>
+      </div>
+      <div class="stage" style="min-height:600px">
+        <div class="host">
+          <h3>Education platform engineer</h3>
+          <p class="sub">Fernhill Learning · Remote · Full time</p>
+          <label>Full name</label><div class="in">Ada Moreno</div>
+          <label>Email</label><div class="in">ada@example.com</div>
+          <label>Résumé</label><div class="in">ada-moreno-cv.pdf</div>
+          <div class="slot"><div class="w"><span class="cb spin"></span><span class="say"></span><span class="mark"><span class="seal"><svg><use href="#seal-g"/></svg></span><b>voit<span style="color:var(--proof)">Proof</span></b><small>Privacy · Terms</small></span></div></div>
+          <span class="submit off">Submit application</span>
+        </div>
+        <div class="veil"></div>
+        <div class="pop">
+          <div class="pop-h"><div class="t"><i></i>SQL · grade-report.sql</div><div class="q">Courses with no grades yet are missing from this report. Why?</div></div>
+          <div class="pop-b">
+<pre class="art"><span class="c">-- Average grade per course, for the term report</span>
+SELECT c.title, AVG(g.score)
+  FROM courses c
+  LEFT JOIN grades g ON g.course_id = c.id
+ WHERE g.term = '2026-autumn'
+ GROUP BY c.title;</pre>
+            <div class="opts">
+              <div class="opt"><span class="k">A</span><span>AVG skips nulls, so those rows are dropped.</span></div>
+              <div class="opt on"><span class="k">B</span><span>The WHERE on g.term turns the LEFT JOIN into an inner join.</span></div>
+              <div class="opt"><span class="k">C</span><span>GROUP BY needs c.id as well as c.title.</span></div>
+            </div>
+          </div>
+          <div class="pop-f"><span class="ic">i</span><span class="n">2 / 5</span><span class="go">Next</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">05 · The note, last</span>
+        <p>Same window. Typed, 280 characters, paste off. Not scored; it goes to the employer as written.</p>
+      </div>
+      <div class="stage" style="min-height:520px">
+        <div class="host">
+          <h3>Education platform engineer</h3>
+          <p class="sub">Fernhill Learning · Remote · Full time</p>
+          <label>Full name</label><div class="in">Ada Moreno</div>
+          <label>Email</label><div class="in">ada@example.com</div>
+          <label>Résumé</label><div class="in">ada-moreno-cv.pdf</div>
+          <div class="slot"><div class="w"><span class="cb spin"></span><span class="say"></span><span class="mark"><span class="seal"><svg><use href="#seal-g"/></svg></span><b>voit<span style="color:var(--proof)">Proof</span></b><small>Privacy · Terms</small></span></div></div>
+          <span class="submit off">Submit application</span>
+        </div>
+        <div class="veil"></div>
+        <div class="pop">
+          <div class="pop-h"><div class="t"><i></i>Linux · harden the grading server</div><div class="q">You are on this server over SSH. What goes wrong if you run this?</div></div>
+          <div class="pop-b">
+<pre class="art">sudo ufw default deny incoming
+sudo ufw --force enable
+sudo ufw allow 443/tcp</pre>
+            <div class="box" style="margin-top:8px">Port 22 is never allowed, so enabling ufw drops my SSH session and locks me out</div>
+            <div class="under"><span>In your own words</span><span>84 / 280</span></div>
+          </div>
+          <div class="pop-f"><span class="ic">i</span><span class="n">5 / 5</span><span class="go">Done</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 -->
+    <div class="frame">
+      <div class="notes">
+        <span class="label">06 · Ticked</span>
+        <p>The window closes, the box ticks, submit wakes up. Nothing else is shown to the candidate in the form.</p>
+        <p>How each skill scored goes with the application, for the recruiter (mockup 05, frame 07).</p>
+      </div>
+      <div class="stage">
+        <div class="host">
+          <h3>Education platform engineer</h3>
+          <p class="sub">Fernhill Learning · Remote · Full time</p>
+          <label>Full name</label><div class="in">Ada Moreno</div>
+          <label>Email</label><div class="in">ada@example.com</div>
+          <label>Résumé</label><div class="in">ada-moreno-cv.pdf</div>
+          <div class="slot"><div class="w"><span class="cb done"><svg><use href="#check"/></svg></span><span class="say"></span><span class="mark"><span class="seal"><svg><use href="#seal-g"/></svg></span><b>voit<span style="color:var(--proof)">Proof</span></b><small>Privacy · Terms</small></span></div></div>
+          <span class="submit">Submit application</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+</body>
+</html>

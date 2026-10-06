@@ -1,6 +1,7 @@
 {
   "id": "education-platform-engineer",
-  "name": "Education platform engineer · Fernhill Learning",
+  "name": "Education platform engineer",
+  "employer": "Fernhill Learning",
   "items": [
     "gradebook-scope",
     "merge-duplicates",

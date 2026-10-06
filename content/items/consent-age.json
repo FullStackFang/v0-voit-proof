@@ -6,7 +6,7 @@
   "artifact": {
     "kind": "code",
     "label": "AI suggestion · signup.ts",
-    "body": "// Fernhill rule: students under 13 need a parent's consent\nfunction needsParentConsent(birthDate: Date, today = new Date()) {\n  return today.getFullYear() - birthDate.getFullYear() < 13;\n}"
+    "body": "// Rule: under-13s need a parent's consent\nfunction needsConsent(born: Date, today = new Date()) {\n  return today.getFullYear() - born.getFullYear() < 13;\n}"
   },
   "question": "A student born on 20 November 2013 signs up on 5 October 2026. What does this return?",
   "options": [

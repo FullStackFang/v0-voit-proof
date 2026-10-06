@@ -28,6 +28,8 @@ export type AnswerRow = {
   answeredAt: Date;
   score: number | null;
   signals: Signals;
+  /** "What decided it?" in the candidate's words; null for write items. */
+  why: string | null;
 };
 
 export interface Store {
@@ -105,6 +107,7 @@ export function pgStore(url = process.env.DATABASE_URL): Store {
     answeredAt: r.answered_at as Date,
     score: r.score === null ? null : Number(r.score),
     signals: r.signals as Signals,
+    why: (r.why as string | null) ?? null,
   });
 
   return {
@@ -128,9 +131,10 @@ export function pgStore(url = process.env.DATABASE_URL): Store {
           returning id`;
         if (moved.length === 0) return false;
         await tx`
-          insert into proof.answers (session_id, item_id, position, answer, served_at, answered_at, score, signals)
+          insert into proof.answers (session_id, item_id, position, answer, served_at, answered_at, score, signals, why)
           values (${row.sessionId}, ${row.itemId}, ${row.position}, ${tx.json(row.answer as never)},
-                  ${row.servedAt}, ${row.answeredAt}, ${row.score}, ${tx.json(row.signals)})`;
+                  ${row.servedAt}, ${row.answeredAt}, ${row.score}, ${tx.json(row.signals)},
+                  ${row.why === null ? null : tx.json(row.why as never)})`;
         return true;
       });
     },

@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "build:embed": "esbuild src/embed/index.ts --bundle --minify --format=iife --target=es2020 --outfile=public/embed.js",
-    "dev": "npm run build:embed && next dev",
+    "dev": "npm run build:embed && next dev -p 7001",
     "build": "npm run build:embed && next build",
-    "start": "next start",
+    "start": "next start -p 7001",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "keygen": "node scripts/keygen.mjs",
